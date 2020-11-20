@@ -6,10 +6,16 @@ To install `RMVMR` directly from the GitHub repository, first make sure you have
 
     install.packages("remotes")
 
-Then the `MVMR` package can be installed using:
+Then the `RMVMR` package can be installed using:
 
     library(remotes)
     install_github("WSpiller/RMVMR", build_opts = c("--no-resave-data", "--no-manual"), build_vignettes = TRUE)
+
+    install_github("WSpiller/MVMR", build_opts = c("--no-resave-data", "--no-manual"), build_vignettes = TRUE)
+    
+    install_github("WSpiller/RadialMR", build_opts = c("--no-resave-data", "--no-manual"), build_vignettes = TRUE)
+    
+    
     
 To update the package just run the `remotes::install_github("WSpiller/RMVMR", build_opts = c("--no-resave-data", "--no-manual"), build_vignettes = TRUE)` command again.
 
