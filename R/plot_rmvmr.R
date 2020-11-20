@@ -36,6 +36,7 @@
 plot_rmvmr<-function(r_input,rmvmr){
   
   library(RadialMR)
+  library(ggplot2)
   
   rmvmr<-rmvmr$coef
   
