@@ -146,7 +146,7 @@ pleiotropy_rmvmr<-function(r_input,rmvmr){
   
   for(i in 1:exp.number){
     Qj_out[i,1]<-sum(p.dat[p.dat$Group==levels(p.dat$Group)[i],]$Qjcor)
-    Qj_out[i,2]<-pchisq(Qj_out[i,1],length(p.dat[,1])-(exp.number-1),lower.tail = FALSE)
+    Qj_out[i,2]<-pchisq(Qj_out[i,1],length(p.dat[p.dat$Group==levels(p.dat$Group)[i],])-exp.number,lower.tail = FALSE)
   }
   
   TotalQs<-data.frame(Qj_out)
