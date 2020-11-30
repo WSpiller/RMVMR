@@ -10,7 +10,7 @@
 #' @return A formatted data frame.
 #'
 #' @author Wes Spiller; Eleanor Sanderson; Jack Bowden.
-#' @references Sanderson, E., et al., An examination of multivariable Mendelian randomization in the single-sample and two-sample summary data settings. International Journal of Epidemiology, 2019, 48, 3, 713-727. <https://dx.doi.org/10.1093/ije/dyy262>
+#'@references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
 #' @export
 #' @examples
 #'
@@ -93,9 +93,7 @@ format_rmvmr<-function(BXGs,BYG,seBXGs,seBYG,RSID){
       dat[j,i] <- 0.00001
       }
     }
-  }
-  
-  
+  }  
   
   #Append rmvmr_format class to output data frame
   class(dat) <- append(class(dat),

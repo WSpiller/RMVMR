@@ -16,7 +16,7 @@
 #' \item{\code{qall}}{A list containing the individual Q-statistics and data for RMVMR analyses regressing each exposure sequentially upon remaining exposures in the \code{r_input} object. Indexing follows that of \code{plots}}
 #'}
 #'@author Wes Spiller; Eleanor Sanderson; Jack Bowden.
-#'@references Sanderson, E., et al., An examination of multivariable Mendelian randomization in the single-sample and two-sample summary data settings. International Journal of Epidemiology, 2019, 48, 3, 713-727. <https://dx.doi.org/10.1093/ije/dyy262>
+#'@references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
 #' @export
 #' @examples
 #'
@@ -41,6 +41,7 @@ strength_rmvmr<-function(r_input,gencov){
   
   library(MVMR)
   library(ggplot2)
+  library(RadialMR)
   
   invisible(capture.output(MVMR_S<-strength_mvmr(r_input,gencov)))
   
@@ -90,21 +91,17 @@ strength_rmvmr<-function(r_input,gencov){
       
       Qs[[i]] <- local({
         i <- i
-        qst <- G$qstat
+        qst <- G$gq
       })
       
       Qall[[i]] <- local({
         i <- i
-        qll <- G$qall
+        qll <- G$qdat
       })
       
     }
     
     }
-    
-    
-    
-    
   
   multi_return <- function() {
     Out_list <- list("plot" = plots,"qstat"= Qs,"qall"= Qall, "f"=MVMR_S)
@@ -114,6 +111,5 @@ strength_rmvmr<-function(r_input,gencov){
   }
   
   OUT<-multi_return()
-  
   
 }

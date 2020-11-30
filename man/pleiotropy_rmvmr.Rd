@@ -13,8 +13,8 @@ pleiotropy_rmvmr(r_input, rmvmr)
 }
 \value{
 An object of class \code{"RMVMR_Q"} containing the following components:\describe{
-\item{\code{qstat}}{A data frame containing the global Q-statistic and p-value after applying a correction for each exposure}
-\item{\code{qall}}{A data frame containing the individual Q-statistic and p-value for each SNP after applying a correction for each exposure}
+\item{\code{gq}}{A data frame containing the global Q-statistic and p-value after applying a correction for each exposure}
+\item{\code{qdat}}{A data frame containing the individual Q-statistic and p-value for each SNP after applying a correction for each exposure}
 }
 }
 \description{
@@ -36,11 +36,11 @@ rmvmr_output<-ivw_rmvmr(f.data,F)
 
 q_object<-pleiotropy_rmvmr(f.data,rmvmr_output)
 
-q_object$qstat
-q_object$qall
+q_object$gq
+q_object$qdat
 }
 \references{
-Sanderson, E., et al., An examination of multivariable Mendelian randomization in the single-sample and two-sample summary data settings. International Journal of Epidemiology, 2019, 48, 3, 713-727. \url{https://dx.doi.org/10.1093/ije/dyy262}
+Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
 }
 \author{
 Wes Spiller; Eleanor Sanderson; Jack Bowden.

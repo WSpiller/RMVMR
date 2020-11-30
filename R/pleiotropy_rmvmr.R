@@ -9,12 +9,12 @@
 #' @param rmvmr An object containing the output from the \code{ivw_rmvmr} function of class \code{IVW_RMVMR}.
 #'
 #' @return An object of class \code{"RMVMR_Q"} containing the following components:\describe{
-#' \item{\code{qstat}}{A data frame containing the global Q-statistic and p-value after applying a correction for each exposure}
-#' \item{\code{qall}}{A data frame containing the individual Q-statistic and p-value for each SNP after applying a correction for each exposure}
+#' \item{\code{gq}}{A data frame containing the global Q-statistic and p-value after applying a correction for each exposure}
+#' \item{\code{qdat}}{A data frame containing the individual Q-statistic and p-value for each SNP after applying a correction for each exposure}
 #'}
 #'
 #' @author Wes Spiller; Eleanor Sanderson; Jack Bowden.
-#' @references Sanderson, E., et al., An examination of multivariable Mendelian randomization in the single-sample and two-sample summary data settings. International Journal of Epidemiology, 2019, 48, 3, 713-727. <https://dx.doi.org/10.1093/ije/dyy262>
+#'@references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
 #' @export
 #' @examples
 #'
@@ -29,60 +29,58 @@
 #'
 #' q_object<-pleiotropy_rmvmr(f.data,rmvmr_output)
 #' 
-#' q_object$qstat
-#' q_object$qall
+#' q_object$gq
+#' q_object$qdat
+
 
 pleiotropy_rmvmr<-function(r_input,rmvmr){
   
+  #Load RadialMR package
   library(RadialMR)
   
+  # Extract MVMR estimates
   rmvmr<-rmvmr$coef
   
+  #Define number of exposures included in MVMR model
   exp.number<-length(names(r_input)[-c(1,2,3)])/2
   
+  #Define matrix for identifying IV1 satisfying variants using F>10.
   f.vec<-matrix(0L, nrow = length(r_input[,1]), ncol = exp.number)
   
   for(i in 1:exp.number){
     f.vec[,i]<- r_input[,3+i]^2/r_input[,3 + exp.number + i]^2
-    
     for(j in 1:length(r_input[,1])){
       if(f.vec[j,i] < 10){
         f.vec[j,i]<-0
-      }else{
-        f.vec[j,i]<-1
+        }else{
+          f.vec[j,i]<-1
+        }
       }
-      
-    }
-    
   }
   
+  #Define null variable for univariate MR data
   Xlist<-NULL
   
+  #Obtain univariate MR data for each exposure
   for(i in 1:exp.number){
-    
-    #Format data for univariate MR using significant SNPs for each exposure
-    Xsub<-r_input[f.vec[,i] == 1,]
-    Xrad.dat<-format_radial(Xsub[,3+i],Xsub[,2],Xsub[,3 + exp.number + i],Xsub[,3],Xsub[,1])
-    
-    X.res<-ivw_radial(Xrad.dat,0.05/nrow(Xrad.dat),1,0.0001,F)
-    
-    
-    if(is.null(Xlist)){
-      Xlist<-X.res
-    }else{
-      Xlist<-append(Xlist,X.res)
-    }
-    
+      
+      Xsub<-r_input[f.vec[,i] == 1,]
+      Xrad.dat<-format_radial(Xsub[,3+i],Xsub[,2],Xsub[,3 + exp.number + i],Xsub[,3],Xsub[,1])
+      X.res<-ivw_radial(Xrad.dat,0.05/nrow(Xrad.dat),1,0.0001,F)
+      if(is.null(Xlist)){
+        Xlist<-X.res
+        }else{
+          Xlist<-append(Xlist,X.res)
+          }
   }
   
-  p.dat<-NULL
+  #Create combined data frame of univariate values
   
+  p.dat<-NULL
   for(i in 1:exp.number){
-    
     Xdat<-data.frame(Xlist[5 + ((i-1)* 13)])
     Xdat$Group<-rep(i,nrow(Xdat))
     names(Xdat)<-c("SNP","Wj","BetaWj","Qj","Qj_Chi","Outliers","Group")
-    
     
     if(is.null(p.dat)){
       p.dat<-Xdat
@@ -93,143 +91,86 @@ pleiotropy_rmvmr<-function(r_input,rmvmr){
   }
   
   p.dat[,7]<-as.factor(p.dat[,7])
-  
   for(i in 1:exp.number){
     levels(p.dat[,7])[i] <- paste0("Exposure_",i,collapse="")
-    
   }
   
-  ###############
-  ###############
-  ###############
+  ##AL
   
-  #### Correction Plot
   
-  correction.vec<-NULL
+  Ratios<-NULL
   
   for(i in 1:exp.number){
     
-    if(is.null(correction.vec)){
-      Tempdat<-r_input[r_input$SNP %in% p.dat$SNP[p.dat$Group== levels(p.dat$Group)[i]],]
-      correction.vec<-p.dat[p.dat$Group== levels(p.dat$Group)[i],]$BetaWj /
-        p.dat[p.dat$Group== levels(p.dat$Group)[i],]$Wj
-      
-      for(j in 1:exp.number){
-        
-        if(i==j){
-          correction.vec<-correction.vec
-        }else{
-          correction.vec<- correction.vec - ((Tempdat[,3+j]*rmvmr[j,1])/Tempdat[,3+i])
-        }
-        
-      }
-    }else{
-      Tempdat<-r_input[r_input$SNP %in% p.dat$SNP[p.dat$Group== levels(p.dat$Group)[i]],]
-      correction.vec2<-p.dat[p.dat$Group== levels(p.dat$Group)[i],]$BetaWj /
-        p.dat[p.dat$Group== levels(p.dat$Group)[i],]$Wj
-      
-      for(j in 1:exp.number){
-        
-        if(i==j){
-          correction.vec2<-correction.vec2
-        }else{
-          correction.vec2<- correction.vec2 - ((Tempdat[,3+j]*rmvmr[j,1])/Tempdat[,3+i])
-        }
-        
-      }
-      
-      correction.vec<-c(correction.vec,correction.vec2)
-      
-    }
-  }
-  
-  indiq<-NULL
-  Tempdat<-NULL
-  
-  for(i in 1:exp.number){
-    
-    Xdat<-data.frame(Xlist[5+((i-1)*13)])
-    
-    pdat.t<-p.dat
-    
-    #Define Q statistic for each individual variant
-    Tempdat<-r_input[r_input$SNP %in% p.dat$SNP[p.dat$Group== levels(p.dat$Group)[i]],]
-    Qj1<- (Xdat[,3]/Xdat[,2])
+    tdat<-r_input[r_input$SNP %in% p.dat[p.dat$Group==levels(p.dat$Group)[i],]$SNP,]
+    Ratio_temp<-tdat[,2] / tdat[,(3+i)]
     
     for(j in 1:exp.number){
       if(i == j){
-        Qj1<-Qj1
+        Ratio_temp<-Ratio_temp
+        }else{
+          Ratio_temp<- Ratio_temp - ((tdat[,(3+j)]*rmvmr[j,1]) / tdat[,(3+i)])
+        }
+    }
+      if(is.null(Ratios)){
+        Ratios<-Ratio_temp
       }else{
-        Qj1<- Qj1 - ((Tempdat[,3+j]*rmvmr[j,1])/Tempdat[,3+i])
-      }
-    }
+        Ratios<-c(Ratios,Ratio_temp)
+        }
+  }
+  
+  #QJ calculations
+  
+  p.dat$coratios<-Ratios
+  
+  Qjvec<-NULL
+  
+  for(i in 1:exp.number){
     
-    if(is.null(indiq)){
-      indiq<-Qj1
+    tdat<-p.dat[p.dat$Group==levels(p.dat$Group)[i],]
+    
+    Qj<-tdat$Wj * (tdat$coratios - rmvmr[i,1])^2
+    
+    if(is.null(Qjvec)){
+      Qjvec<-Qj
+    }else{
+      Qjvec<-c(Qjvec,Qj)
+    }
+  }
+
+  p.dat$Qjcor<-Qjvec
+  
+  #Define matrix for recording total Q statistics.
+  Qj_out<-matrix(0L, nrow = exp.number, ncol = 2)
+  indqj<-rep(0,length(p.dat[,1]))
+  
+  for(i in 1:exp.number){
+    Qj_out[i,1]<-sum(p.dat[p.dat$Group==levels(p.dat$Group)[i],]$Qjcor)
+    Qj_out[i,2]<-pchisq(Qj_out[i,1],length(p.dat[,1])-(exp.number-1),lower.tail = FALSE)
+  }
+  
+  TotalQs<-data.frame(Qj_out)
+  names(TotalQs)<- c("q_statistic","p_value")
+  row.names(TotalQs)<-levels(p.dat$Group)
+  
+  
+  for(i in 1:length(p.dat[,1])){
+    indqj[i]<- pchisq(p.dat$Qjcor[i],1,lower.tail = FALSE)
+  }
+    
+    p.dat$corQjchi<-indqj
+    
+    out_data<-p.dat[,c(1,2,8,9,10,7)]
+    
+    names(out_data)<-c("snp","wj","corrected_beta","qj","qj_p","ref_exposure")
+    
+    multi_return <- function() {
+      Out_list <- list("gq" = TotalQs, "qdat" = out_data)
+      class(Out_list)<-"RMVMR_Q"
       
-    }else{
-      indiq<-c(indiq,Qj1)
-    }
-  }
-  
-  indiqchi<-NULL
-  
-  for(i in 1:length(indiq)){
-    
-    
-    if(is.null(indiqchi)){
-      indiqchi<-pchisq(indiq[i],1,lower.tail = FALSE)
-    }else{
-      indiqchi<-c(indiqchi,pchisq(indiq[i],1,lower.tail = FALSE))
+      return(Out_list)
     }
     
-  }
-  
-  pdat.t<-cbind(p.dat,indiq)
-  
-  TQ<-NULL
-  TQchi<-NULL
-  
-  for(i in 1:exp.number){
-    
-    Xt<-pdat.t[pdat.t$Group == levels(pdat.t$Group)[i],]
-    
-    indiq2<-Xt$Wj*(Xt$indiq-rmvmr[i,1])^2
-    
-    if(is.null(TQ)){
-      TQ<-sum(indiq2)
-      TQchi<-pchisq(sum(indiq2),(nrow(Xt)-1),lower.tail = FALSE)
-    }else{
-      TQ<-c(TQ,sum(indiq2))
-      TQchi<-c(TQchi,pchisq(sum(indiq2),(nrow(Xt)-1),lower.tail = FALSE))
-    }
+    OUT<-multi_return()
     
   }
-  
-  
-  IQs<-data.frame(p.dat$SNP,indiq,indiqchi,p.dat$Group)
-  names(IQs)<-c("SNP","qstat","q_chi","exposure")
-  
-  Total_Q<-data.frame(TQ,TQchi)
-  names(Total_Q)<-c("global_qstat","gq_chi")
-  
-  
-  for(i in 1:exp.number){
-    row.names(Total_Q)[i] <- paste0("Exposure_",i,collapse="")
-    
-  }
-  
-  ###############
-  ###############
-  ###############
-  
-  multi_return <- function() {
-    Out_list <- list("qstat" = Total_Q, "qall" = IQs)
-    class(Out_list)<-"RMVMR_Q"
-    
-    return(Out_list)
-  }
-  
-  OUT<-multi_return()
-  
-}

@@ -29,7 +29,7 @@ ivw_rmvmr(f.data,T)$coef
 
 }
 \references{
-Sanderson, E., et al., An examination of multivariable Mendelian randomization in the single-sample and two-sample summary data settings. International Journal of Epidemiology, 2019, 48, 3, 713-727. \url{https://dx.doi.org/10.1093/ije/dyy262}
+Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
 }
 \author{
 Wes Spiller; Eleanor Sanderson; Jack Bowden.

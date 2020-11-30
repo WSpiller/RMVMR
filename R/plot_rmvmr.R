@@ -15,7 +15,7 @@
 #'}
 #'
 #' @author Wes Spiller; Eleanor Sanderson; Jack Bowden.
-#' @references Sanderson, E., et al., An examination of multivariable Mendelian randomization in the single-sample and two-sample summary data settings. International Journal of Epidemiology, 2019, 48, 3, 713-727. <https://dx.doi.org/10.1093/ije/dyy262>
+#'@references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
 #' @export
 #' @examples
 #'
@@ -37,8 +37,6 @@ plot_rmvmr<-function(r_input,rmvmr){
   
   library(RadialMR)
   library(ggplot2)
-  
-  rmvmr<-rmvmr$coef
   
   exp.number<-length(names(r_input)[-c(1,2,3)])/2
   
@@ -98,10 +96,9 @@ plot_rmvmr<-function(r_input,rmvmr){
   
   for(i in 1:exp.number){
     levels(p.dat[,7])[i] <- paste0("Exposure_",i,collapse="")
-    
   }
   
-  cpalette <- c("#E69F00", "#D55E00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#CC79A7")
+  cpalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442","#D55E00", "#0072B2", "#CC79A7")
   
   B<-ggplot(p.dat,aes(x=Wj,y=BetaWj))+labs(title="Radial MVMR without correction")+ geom_point(aes(colour=Group))+
     theme_bw()+theme(panel.border = element_blank(),panel.grid.major = element_blank(),panel.grid.minor = element_blank(),
@@ -110,7 +107,7 @@ plot_rmvmr<-function(r_input,rmvmr){
   
   for(i in 1:exp.number){
     
-    B<-  B + geom_segment(x = 0, xend = max(p.dat$Wj+5), y = 0, yend = rmvmr[i,1]*max(p.dat$Wj+5),color=cpalette[i])
+    B<-  B + geom_segment(x = 0, xend = max(p.dat$Wj+5), y = 0, yend = rmvmr$coef[i,1]*max(p.dat$Wj+5),color=cpalette[i])
     
   }
   
@@ -119,58 +116,24 @@ plot_rmvmr<-function(r_input,rmvmr){
   
   #### Correction Plot
   
-  correction.vec<-NULL
+  cordat<-pleiotropy_rmvmr(r_input,rmvmr)
   
-  for(i in 1:exp.number){
-    
-    if(is.null(correction.vec)){
-      Tempdat<-r_input[r_input$SNP %in% p.dat$SNP[p.dat$Group== levels(p.dat$Group)[i]],]
-      correction.vec<-p.dat[p.dat$Group== levels(p.dat$Group)[i],]$BetaWj /
-        p.dat[p.dat$Group== levels(p.dat$Group)[i],]$Wj
-      
-      for(j in 1:exp.number){
-        
-        if(i==j){
-          correction.vec<-correction.vec
-        }else{
-          correction.vec<- correction.vec - ((Tempdat[,3+j]*rmvmr[j,1])/Tempdat[,3+i])
-        }
-        
-      }
-    }else{
-      Tempdat<-r_input[r_input$SNP %in% p.dat$SNP[p.dat$Group== levels(p.dat$Group)[i]],]
-      correction.vec2<-p.dat[p.dat$Group== levels(p.dat$Group)[i],]$BetaWj /
-        p.dat[p.dat$Group== levels(p.dat$Group)[i],]$Wj
-      
-      for(j in 1:exp.number){
-        
-        if(i==j){
-          correction.vec2<-correction.vec2
-        }else{
-          correction.vec2<- correction.vec2 - ((Tempdat[,3+j]*rmvmr[j,1])/Tempdat[,3+i])
-        }
-        
-      }
-      
-      correction.vec<-c(correction.vec,correction.vec2)
-      
-    }
-  }
+  cpalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442","#D55E00", "#0072B2", "#CC79A7")
   
-  cpalette <- c("#E69F00", "#D55E00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#CC79A7")
+  p.dat<-cordat$qdat
   
-  C<-ggplot(p.dat,aes(x=Wj,y=Wj*correction.vec))+labs(title="Radial MVMR with correction")+ geom_point(aes(colour=Group))+
+  C<-ggplot(p.dat,aes(x=wj,y=wj*corrected_beta))+labs(title="Radial MVMR with correction")+ geom_point(aes(colour=ref_exposure))+
     theme_bw()+theme(panel.border = element_blank(),panel.grid.major = element_blank(),panel.grid.minor = element_blank(),
                      axis.line = element_line(colour = "black"))+ylab(expression(hat(beta)[j]~sqrt(W[j])))+xlab(expression(sqrt(W[j])))+
-    scale_x_continuous(limits = c(0,max(p.dat$Wj+5),expand=c(0,0)))+scale_y_continuous(limits = c(min((p.dat$Wj*correction.vec)-5),max((p.dat$Wj*correction.vec)+5)))
+    scale_x_continuous(limits = c(0,max(p.dat$wj+5),expand=c(0,0)))+scale_y_continuous(limits = c(min((p.dat$wj*p.dat$corrected_beta)-5),max((p.dat$wj*p.dat$corrected_beta)+5)))
   
   for(i in 1:exp.number){
-    C<- C + geom_segment(x = 0, xend = max(p.dat$Wj+5), y = 0, yend = rmvmr[i,1]*max(p.dat$Wj+5),color=cpalette[i])
+    C<- C + geom_segment(x = 0, xend = max(p.dat$wj+5), y = 0, yend = rmvmr$coef[i,1]*max(p.dat$wj+5),color=cpalette[i])
     
   }
   
   C<- C + 
-    scale_color_manual(name="Estimates",breaks=levels(p.dat[,7]),values=cpalette[1:(exp.number)])
+    scale_color_manual(name="Estimates",breaks=levels(p.dat[,6]),values=cpalette[1:(exp.number)])
   
   multi_return <- function() {
     Out_list <- list("p1" = B,"p2"= C)
