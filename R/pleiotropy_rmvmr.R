@@ -52,10 +52,10 @@ pleiotropy_rmvmr<-function(r_input,rmvmr){
     for(j in 1:length(r_input[,1])){
       if(f.vec[j,i] < 10){
         f.vec[j,i]<-0
-        }else{
-          f.vec[j,i]<-1
-        }
+      }else{
+        f.vec[j,i]<-1
       }
+    }
   }
   
   #Define null variable for univariate MR data
@@ -63,15 +63,15 @@ pleiotropy_rmvmr<-function(r_input,rmvmr){
   
   #Obtain univariate MR data for each exposure
   for(i in 1:exp.number){
-      
-      Xsub<-r_input[f.vec[,i] == 1,]
-      Xrad.dat<-format_radial(Xsub[,3+i],Xsub[,2],Xsub[,3 + exp.number + i],Xsub[,3],Xsub[,1])
-      X.res<-ivw_radial(Xrad.dat,0.05/nrow(Xrad.dat),1,0.0001,F)
-      if(is.null(Xlist)){
-        Xlist<-X.res
-        }else{
-          Xlist<-append(Xlist,X.res)
-          }
+    
+    Xsub<-r_input[f.vec[,i] == 1,]
+    Xrad.dat<-format_radial(Xsub[,3+i],Xsub[,2],Xsub[,3 + exp.number + i],Xsub[,3],Xsub[,1])
+    X.res<-ivw_radial(Xrad.dat,0.05/nrow(Xrad.dat),1,0.0001,F)
+    if(is.null(Xlist)){
+      Xlist<-X.res
+    }else{
+      Xlist<-append(Xlist,X.res)
+    }
   }
   
   #Create combined data frame of univariate values
@@ -108,15 +108,15 @@ pleiotropy_rmvmr<-function(r_input,rmvmr){
     for(j in 1:exp.number){
       if(i == j){
         Ratio_temp<-Ratio_temp
-        }else{
-          Ratio_temp<- Ratio_temp - ((tdat[,(3+j)]*rmvmr[j,1]) / tdat[,(3+i)])
-        }
-    }
-      if(is.null(Ratios)){
-        Ratios<-Ratio_temp
       }else{
-        Ratios<-c(Ratios,Ratio_temp)
-        }
+        Ratio_temp<- Ratio_temp - ((tdat[,(3+j)]*rmvmr[j,1]) / tdat[,(3+i)])
+      }
+    }
+    if(is.null(Ratios)){
+      Ratios<-Ratio_temp
+    }else{
+      Ratios<-c(Ratios,Ratio_temp)
+    }
   }
   
   #QJ calculations
@@ -137,7 +137,7 @@ pleiotropy_rmvmr<-function(r_input,rmvmr){
       Qjvec<-c(Qjvec,Qj)
     }
   }
-
+  
   p.dat$Qjcor<-Qjvec
   
   #Define matrix for recording total Q statistics.
@@ -146,7 +146,7 @@ pleiotropy_rmvmr<-function(r_input,rmvmr){
   
   for(i in 1:exp.number){
     Qj_out[i,1]<-sum(p.dat[p.dat$Group==levels(p.dat$Group)[i],]$Qjcor)
-    Qj_out[i,2]<-pchisq(Qj_out[i,1],length(p.dat[p.dat$Group==levels(p.dat$Group)[i],])-exp.number,lower.tail = FALSE)
+    Qj_out[i,2]<-pchisq(Qj_out[i,1],nrow(p.dat[p.dat$Group==levels(p.dat$Group)[i],])-exp.number,lower.tail = FALSE)
   }
   
   TotalQs<-data.frame(Qj_out)
@@ -157,20 +157,20 @@ pleiotropy_rmvmr<-function(r_input,rmvmr){
   for(i in 1:length(p.dat[,1])){
     indqj[i]<- pchisq(p.dat$Qjcor[i],1,lower.tail = FALSE)
   }
+  
+  p.dat$corQjchi<-indqj
+  
+  out_data<-p.dat[,c(1,2,8,9,10,7)]
+  
+  names(out_data)<-c("snp","wj","corrected_beta","qj","qj_p","ref_exposure")
+  
+  multi_return <- function() {
+    Out_list <- list("gq" = TotalQs, "qdat" = out_data)
+    class(Out_list)<-"RMVMR_Q"
     
-    p.dat$corQjchi<-indqj
-    
-    out_data<-p.dat[,c(1,2,8,9,10,7)]
-    
-    names(out_data)<-c("snp","wj","corrected_beta","qj","qj_p","ref_exposure")
-    
-    multi_return <- function() {
-      Out_list <- list("gq" = TotalQs, "qdat" = out_data)
-      class(Out_list)<-"RMVMR_Q"
-      
-      return(Out_list)
-    }
-    
-    OUT<-multi_return()
-    
+    return(Out_list)
   }
+  
+  OUT<-multi_return()
+  
+}
