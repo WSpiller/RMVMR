@@ -24,15 +24,10 @@ We have written the `RMVMR` R package to perform radial multivariable Mendelian 
 statistics for assessing instrument strength and validity. The package accommodates any number of exposures less than 6,
 and is currently includes a range of functions for estimating causal effects, as well as assessing conditional instrument strength and pleiotropic bias.
 
-
-
 ## Citation
 
 The corresponding citation for the paper is forthcoming:
 
 ## License
-
-
-
 
 This project is licensed under GNU GPL v2.
