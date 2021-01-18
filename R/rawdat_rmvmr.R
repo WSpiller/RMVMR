@@ -19,8 +19,8 @@
 #'  \item{\code{tg_se}}{The standard error corresponding to association estimate `tg_beta`}
 #'  \item{\code{sbp_se}}{The standard error corresponding to association estimate `sbp_beta`}
 #' }
-#' 
-#' @source 
+#'
+#' @source
 #' \itemize{
 #' \item \url{http://www.mrbase.org/}
 #' \item \url{https://www.nature.com/articles/ng.2797}
