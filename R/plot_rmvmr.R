@@ -152,8 +152,11 @@ plot_rmvmr <- function(r_input, rmvmr){
                                            max((p.dat$wj*p.dat$corrected_beta) + 5)))
 
   for(i in 1:exp.number){
-    C<- C + geom_segment(x = 0, xend = max(p.dat$wj+5), y = 0, yend = rmvmr$coef[i,1]*max(p.dat$wj+5),color=cpalette[i])
-    
+    C <- C + ggplot2::geom_segment(x = 0,
+                                   xend = max(p.dat$wj + 5),
+                                   y = 0,
+                                   yend = rmvmr$coef[i,1]*max(p.dat$wj + 5),
+                                   color = cpalette[i])
   }
   
   C<- C + 
