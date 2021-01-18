@@ -33,8 +33,8 @@
 #' q_object$gq
 #' q_object$qdat
 
+pleiotropy_rmvmr <- function(r_input, rmvmr){
 
-pleiotropy_rmvmr<-function(r_input,rmvmr){
   
   #Load RadialMR package
   library(RadialMR)
