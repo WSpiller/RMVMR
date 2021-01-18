@@ -49,8 +49,8 @@ strength_rmvmr <- function(r_input, gencov){
   for(i in 1:exp.number){
     
     if(exp.number == 2){
-      
-      tdat<-format_radial(r_input[,(4):(3+exp.number)][-i],r_input[,(3+i)],r_input[,(4+exp.number):(3+exp.number+exp.number)][-i],
+
+      tdat<-RadialMR::format_radial(r_input[,(4):(3+exp.number)][-i],r_input[,(3+i)],r_input[,(4+exp.number):(3+exp.number+exp.number)][-i],
                          r_input[,(3+exp.number+i)],r_input[,1])
       
       A<-ivw_radial(tdat,0.05/nrow(tdat),1,0.0001,F)
