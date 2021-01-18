@@ -3,7 +3,7 @@
 #' Fits a radial IVW multivariable Mendelian randomization model using first order weights.
 #'
 #' @param r_input A formatted data frame using the \code{format_rmvmr} function.
-#' @param summary A logical argument (\code{T} or \code{F}) indicating whether a summary of results should be presented (default= \code{TRUE}).
+#' @param summary A logical argument (\code{TRUE} or \code{FALSE}) indicating whether a summary of results should be presented (default= \code{TRUE}).
 #'
 #' @return An dataframe containing MVMR results, including estimated coefficients, their standard errors, t-statistics, and corresponding (two-sided) p-values.
 #'@author Wes Spiller; Eleanor Sanderson; Jack Bowden.
@@ -17,7 +17,7 @@
 #'     seBXGs = rawdat_rmvmr[,c("ldl_se","hdl_se","tg_se")],
 #'     seBYG = rawdat_rmvmr$sbp_se,
 #'     RSID = rawdat_rmvmr$snp)
-#' ivw_rmvmr(f.data,T)$coef
+#' ivw_rmvmr(f.data, TRUE)$coef
 #'
 
 # Define IVW Radial Multivariable MR function: This takes the formatted dataframe from
