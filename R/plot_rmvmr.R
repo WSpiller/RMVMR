@@ -134,14 +134,23 @@ plot_rmvmr <- function(r_input, rmvmr){
   cordat <- pleiotropy_rmvmr(r_input, rmvmr)
 
   cpalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442","#D55E00", "#0072B2", "#CC79A7")
-  
-  p.dat<-cordat$qdat
-  
-  C<-ggplot(p.dat,aes(x=wj,y=wj*corrected_beta))+labs(title="Radial MVMR with correction")+ geom_point(aes(colour=ref_exposure))+
-    theme_bw()+theme(panel.border = element_blank(),panel.grid.major = element_blank(),panel.grid.minor = element_blank(),
-                     axis.line = element_line(colour = "black"))+ylab(expression(hat(beta)[j]~sqrt(W[j])))+xlab(expression(sqrt(W[j])))+
-    scale_x_continuous(limits = c(0,max(p.dat$wj+5),expand=c(0,0)))+scale_y_continuous(limits = c(min((p.dat$wj*p.dat$corrected_beta)-5),max((p.dat$wj*p.dat$corrected_beta)+5)))
-  
+
+  p.dat <- cordat$qdat
+
+  C <- ggplot2::ggplot(p.dat, ggplot2::aes(x = wj, y = wj*corrected_beta)) +
+    ggplot2::labs(title = "Radial MVMR with correction") +
+    ggplot2::geom_point(ggplot2::aes(colour = ref_exposure)) +
+    ggplot2::theme_bw() +
+    ggplot2::theme(panel.border = ggplot2::element_blank(),
+                   panel.grid.major = ggplot2::element_blank(),
+                   panel.grid.minor = ggplot2::element_blank(),
+                   axis.line = ggplot2::element_line(colour = "black")) +
+    ggplot2::ylab(expression(hat(beta)[j]~sqrt(W[j]))) +
+    ggplot2::xlab(expression(sqrt(W[j]))) +
+    ggplot2::scale_x_continuous(limits = c(0, max(p.dat$wj + 5), expand = c(0,0))) +
+    ggplot2::scale_y_continuous(limits = c(min((p.dat$wj*p.dat$corrected_beta) - 5),
+                                           max((p.dat$wj*p.dat$corrected_beta) + 5)))
+
   for(i in 1:exp.number){
     C<- C + geom_segment(x = 0, xend = max(p.dat$wj+5), y = 0, yend = rmvmr$coef[i,1]*max(p.dat$wj+5),color=cpalette[i])
     
