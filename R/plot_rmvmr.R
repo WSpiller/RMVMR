@@ -130,9 +130,9 @@ plot_rmvmr <- function(r_input, rmvmr){
                                 values = cpalette[1:(exp.number)])
 
   #### Correction Plot
-  
-  cordat<-pleiotropy_rmvmr(r_input,rmvmr)
-  
+
+  cordat <- pleiotropy_rmvmr(r_input, rmvmr)
+
   cpalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442","#D55E00", "#0072B2", "#CC79A7")
   
   p.dat<-cordat$qdat
