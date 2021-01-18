@@ -41,13 +41,13 @@ strength_rmvmr <- function(r_input, gencov){
   invisible(capture.output(MVMR_S <- MVMR::strength_mvmr(r_input,gencov)))
 
   exp.number<-length(names(r_input)[-c(1,2,3)])/2
-  
+
   plots <- vector('list', exp.number)
   Qs <- vector('list', exp.number)
   Qall <- vector('list', exp.number)
-  
+
   for(i in 1:exp.number){
-    
+
     if(exp.number == 2){
 
       tdat<-RadialMR::format_radial(r_input[,(4):(3+exp.number)][-i],r_input[,(3+i)],r_input[,(4+exp.number):(3+exp.number+exp.number)][-i],
@@ -59,52 +59,52 @@ strength_rmvmr <- function(r_input, gencov){
         i <- i
         p1 <- RadialMR::plot_radial(A)
       })
-      
+
       Qs[[i]] <- local({
         i <- i
         qst <- A$qstatistic
       })
-      
+
       Qall[[i]] <- local({
         i <- i
         qll <- A$data
       })
-      
+
     }else{
-      
+
       tdat<-format_rmvmr(r_input[,(4):(3+exp.number)][-i],r_input[,(3+i)],r_input[,(4+exp.number):(3+exp.number+exp.number)][-i],
                          r_input[,(3+exp.number+i)],r_input[,1])
-      
+
       A<-ivw_rmvmr(tdat, F)
-      
+
       G<-pleiotropy_rmvmr(tdat,A)
-      
+
       plots[[i]] <- local({
         i <- i
         p1 <- plot_rmvmr(tdat,A)$p2
       })
-      
+
       Qs[[i]] <- local({
         i <- i
         qst <- G$gq
       })
-      
+
       Qall[[i]] <- local({
         i <- i
         qll <- G$qdat
       })
-      
+
     }
-    
+
     }
-  
+
   multi_return <- function() {
     Out_list <- list("plot" = plots,"qstat"= Qs,"qall"= Qall, "f"=MVMR_S)
     class(Out_list)<-"S_RMVMR"
-    
+
     return(Out_list)
   }
-  
+
   OUT<-multi_return()
-  
+
 }
