@@ -26,10 +26,10 @@
 #'     seBYG = rawdat_rmvmr$sbp_se,
 #'     RSID = rawdat_rmvmr$snp)
 #'     
-#' rmvmr_output<-ivw_rmvmr(f.data,F)
 #'
 #' plot_object<-plot_rmvmr(f.data,rmvmr_output)
 #' 
+#' rmvmr_output<-ivw_rmvmr(f.data, FALSE)
 #' plot_object$p1
 #' plot_object$p2
 
