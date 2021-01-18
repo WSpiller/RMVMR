@@ -6,7 +6,7 @@
 #' using the \code{format_rmvmr} function. Named exposures in each list refer to the remaining exposures in the strength RMVMR model.
 #'
 #' @param r_input A formatted data frame using the \code{format_rmvmr} function.
-#' @param r_input Calculating heterogeneity statistics using the \code{MVMR} package requires the covariance between the 
+#' @param gencov Calculating heterogeneity statistics using the \code{MVMR} package requires the covariance between the
 #'  effect of the genetic variants on each exposure to be known. This can either be estimated from individual level data,
 #'  be assumed to be zero, or fixed at zero using non-overlapping samples of each exposure GWAS. A value of 0 is used by default.
 #'
