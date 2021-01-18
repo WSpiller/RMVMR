@@ -33,11 +33,11 @@
 #' plot_object$p1
 #' plot_object$p2
 
-plot_rmvmr<-function(r_input,rmvmr){
   
   library(RadialMR)
   library(ggplot2)
   
+plot_rmvmr <- function(r_input, rmvmr){
   exp.number<-length(names(r_input)[-c(1,2,3)])/2
   
   f.vec<-matrix(0L, nrow = length(r_input[,1]), ncol = exp.number)
