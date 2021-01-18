@@ -9,16 +9,15 @@
 #'
 #' @format A data frame with 145 rows and 9 variables. Specifically this includes the following information:
 #' \describe{
-#'  \item{\code{snp}} {The identification number for each variant}
-#'  \item{\code{ldl_beta}} {The association estimate for the genetic variant obtained by regressing LDL-C upon the genetic variant}
-#'  \item{\code{hdl_beta}} {The association estimate obtained by regressing HDL-C upon the genetic variant}
-#'  \item{\code{tg_beta}} {The association estimate obtained by regressing triglycerides upon the genetic variant}
-#'  \item{\code{sbp_beta}} {The association estimate for SBP obtained by regressing SBP upon the genetic variant}
-#'  \item{\code{ldl_se}} {The standard error corresponding to association estimate `ldl_beta`}
-#'  \item{\code{hdl_se}} {The standard error corresponding to association estimate `hdl_beta`}
-#'  \item{\code{tg_se}} {The standard error corresponding to association estimate `tg_beta`}
-#'  \item{\code{sbp_se}} {The standard error corresponding to association estimate `sbp_beta`}
-#'  
+#'  \item{\code{snp}}{The identification number for each variant}
+#'  \item{\code{ldl_beta}}{The association estimate for the genetic variant obtained by regressing LDL-C upon the genetic variant}
+#'  \item{\code{hdl_beta}}{The association estimate obtained by regressing HDL-C upon the genetic variant}
+#'  \item{\code{tg_beta}}{The association estimate obtained by regressing triglycerides upon the genetic variant}
+#'  \item{\code{sbp_beta}}{The association estimate for SBP obtained by regressing SBP upon the genetic variant}
+#'  \item{\code{ldl_se}}{The standard error corresponding to association estimate `ldl_beta`}
+#'  \item{\code{hdl_se}}{The standard error corresponding to association estimate `hdl_beta`}
+#'  \item{\code{tg_se}}{The standard error corresponding to association estimate `tg_beta`}
+#'  \item{\code{sbp_se}}{The standard error corresponding to association estimate `sbp_beta`}
 #' }
 #' 
 #' @source 
