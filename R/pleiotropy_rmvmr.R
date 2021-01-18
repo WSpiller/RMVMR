@@ -32,10 +32,6 @@
 
 pleiotropy_rmvmr <- function(r_input, rmvmr){
 
-  
-  #Load RadialMR package
-  library(RadialMR)
-  
   # Extract MVMR estimates
   rmvmr<-rmvmr$coef
   
