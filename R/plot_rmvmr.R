@@ -123,10 +123,12 @@ plot_rmvmr <- function(r_input, rmvmr){
                                    yend = rmvmr$coef[i,1]*max(p.dat$Wj + 5),
                                    color = cpalette[i])
   }
-  
-  B<- B + 
-    scale_color_manual(name="Estimates",breaks=levels(p.dat[,7]),values=cpalette[1:(exp.number)])
-  
+
+  B <- B +
+    ggplot2::scale_color_manual(name = "Estimates",
+                                breaks = levels(p.dat[,7]),
+                                values = cpalette[1:(exp.number)])
+
   #### Correction Plot
   
   cordat<-pleiotropy_rmvmr(r_input,rmvmr)
