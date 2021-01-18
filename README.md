@@ -32,7 +32,7 @@ The corresponding citation for the paper is forthcoming:
 
 ## License
 
-This project is licensed under GNU GPL v3.
 
 
 
+This project is licensed under GNU GPL v2.
