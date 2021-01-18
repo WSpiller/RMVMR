@@ -59,8 +59,8 @@ pleiotropy_rmvmr <- function(r_input, rmvmr){
   for(i in 1:exp.number){
     
     Xsub<-r_input[f.vec[,i] == 1,]
-    Xrad.dat<-format_radial(Xsub[,3+i],Xsub[,2],Xsub[,3 + exp.number + i],Xsub[,3],Xsub[,1])
-    X.res<-ivw_radial(Xrad.dat,0.05/nrow(Xrad.dat),1,0.0001,F)
+    Xrad.dat <- RadialMR::format_radial(Xsub[,3+i],Xsub[,2],Xsub[,3 + exp.number + i],Xsub[,3],Xsub[,1])
+    X.res <- RadialMR::ivw_radial(Xrad.dat,0.05/nrow(Xrad.dat),1,0.0001,F)
     if(is.null(Xlist)){
       Xlist<-X.res
     }else{
