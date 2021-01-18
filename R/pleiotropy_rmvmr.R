@@ -26,6 +26,7 @@
 #'     seBYG = rawdat_rmvmr$sbp_se,
 #'     RSID = rawdat_rmvmr$snp)
 #' rmvmr_output <- ivw_rmvmr(f.data, FALSE)
+#' q_object <- pleiotropy_rmvmr(f.data, rmvmr_output)
 #' q_object$gq
 #' q_object$qdat
 
