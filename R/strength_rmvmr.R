@@ -57,7 +57,7 @@ strength_rmvmr <- function(r_input, gencov){
 
       plots[[i]] <- local({
         i <- i
-        p1 <- plot_radial(A)
+        p1 <- RadialMR::plot_radial(A)
       })
       
       Qs[[i]] <- local({
