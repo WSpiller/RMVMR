@@ -36,6 +36,10 @@
   
   
 plot_rmvmr <- function(r_input, rmvmr){
+
+  # to suppress the R CMD check note about: no visible binding for global variable
+  BetaWj <- Group <- Wj <- wj <- ref_exposure <- corrected_beta <- NULL
+
   exp.number<-length(names(r_input)[-c(1,2,3)])/2
   
   f.vec<-matrix(0L, nrow = length(r_input[,1]), ncol = exp.number)
