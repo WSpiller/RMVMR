@@ -20,22 +20,20 @@
 #' @importFrom utils capture.output
 #' @export
 #' @examples
-#'
 #' f.data <- format_rmvmr(
 #'     BXGs = rawdat_rmvmr[,c("ldl_beta","hdl_beta","tg_beta")],
 #'     BYG = rawdat_rmvmr$sbp_beta,
 #'     seBXGs = rawdat_rmvmr[,c("ldl_se","hdl_se","tg_se")],
 #'     seBYG = rawdat_rmvmr$sbp_se,
 #'     RSID = rawdat_rmvmr$snp)
-#'     
-#' output<-strength_rmvmr(f.data)
-#' 
+#' output <- strength_rmvmr(f.data)
+#'
 #' # The following shows the strength plot and Q statistics for exposure 2,
 #' # regressing exposure 2 upon exposures 1 and 3 (which are labeled exposure 1
 #' # and exposure 2 based on ordering in the RMVMR model).
 #'
-#'output$plot[[2]]
-#'output$qstat[[2]]
+#' output$plot[[2]]
+#' output$qstat[[2]]
 #'
 
 strength_rmvmr<-function(r_input,gencov){
