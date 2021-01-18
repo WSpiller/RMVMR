@@ -36,11 +36,10 @@
 #' output$qstat[[2]]
 #'
 
-strength_rmvmr<-function(r_input,gencov){
-  
-  
-  invisible(capture.output(MVMR_S<-strength_mvmr(r_input,gencov)))
-  
+strength_rmvmr <- function(r_input, gencov){
+
+  invisible(capture.output(MVMR_S <- MVMR::strength_mvmr(r_input,gencov)))
+
   exp.number<-length(names(r_input)[-c(1,2,3)])/2
   
   plots <- vector('list', exp.number)
