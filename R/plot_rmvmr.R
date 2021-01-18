@@ -64,11 +64,11 @@ plot_rmvmr <- function(r_input, rmvmr){
     
     #Format data for univariate MR using significant SNPs for each exposure
     Xsub<-r_input[f.vec[,i] == 1,]
-    Xrad.dat<-format_radial(Xsub[,3+i],Xsub[,2],Xsub[,3 + exp.number + i],Xsub[,3],Xsub[,1])
-    
-    X.res<-ivw_radial(Xrad.dat,0.05/nrow(Xrad.dat),1,0.0001,F)
-    
-    
+    Xrad.dat <- RadialMR::format_radial(Xsub[,3+i],Xsub[,2],Xsub[,3 + exp.number + i],Xsub[,3],Xsub[,1])
+
+    X.res <- RadialMR::ivw_radial(Xrad.dat,0.05/nrow(Xrad.dat),1,0.0001,FALSE)
+
+
     if(is.null(Xlist)){
       Xlist<-X.res
     }else{
