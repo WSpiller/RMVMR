@@ -97,7 +97,7 @@ plot_rmvmr <- function(r_input, rmvmr){
   p.dat[,7]<-as.factor(p.dat[,7])
   
   for(i in 1:exp.number){
-    levels(p.dat[,7])[i] <- paste0("Exposure_",i,collapse="")
+    levels(p.dat[,7])[i] <- paste0("Exposure_", i, collapse = "")
   }
   
   cpalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442","#D55E00", "#0072B2", "#CC79A7")
