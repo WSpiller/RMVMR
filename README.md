@@ -4,7 +4,9 @@
 
 To install `RMVMR` directly from the GitHub repository, first make sure you have the `remotes` package installed:
 
-    install.packages("remotes")
+```r
+install.packages("remotes")
+```
 
 Then the `RMVMR` package can be installed using:
 
