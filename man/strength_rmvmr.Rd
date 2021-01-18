@@ -7,7 +7,9 @@
 strength_rmvmr(r_input, gencov)
 }
 \arguments{
-\item{r_input}{Calculating heterogeneity statistics using the \code{MVMR} package requires the covariance between the
+\item{r_input}{A formatted data frame using the \code{format_rmvmr} function.}
+
+\item{gencov}{Calculating heterogeneity statistics using the \code{MVMR} package requires the covariance between the
 effect of the genetic variants on each exposure to be known. This can either be estimated from individual level data,
 be assumed to be zero, or fixed at zero using non-overlapping samples of each exposure GWAS. A value of 0 is used by default.}
 }
@@ -25,15 +27,13 @@ MVMR analyses. The function outputs a list of plots, global Q-statistics, and in
 using the \code{format_rmvmr} function. Named exposures in each list refer to the remaining exposures in the strength RMVMR model.
 }
 \examples{
-
 f.data <- format_rmvmr(
     BXGs = rawdat_rmvmr[,c("ldl_beta","hdl_beta","tg_beta")],
     BYG = rawdat_rmvmr$sbp_beta,
     seBXGs = rawdat_rmvmr[,c("ldl_se","hdl_se","tg_se")],
     seBYG = rawdat_rmvmr$sbp_se,
     RSID = rawdat_rmvmr$snp)
-    
-output<-strength_rmvmr(f.data)
+output <- strength_rmvmr(f.data)
 
 # The following shows the strength plot and Q statistics for exposure 2,
 # regressing exposure 2 upon exposures 1 and 3 (which are labeled exposure 1

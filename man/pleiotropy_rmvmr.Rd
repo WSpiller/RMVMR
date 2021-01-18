@@ -24,20 +24,16 @@ a correction, as well as a corresponding p-value. The second data frame contains
 analyses, relative to the exposure given in column \code{exposure}.
 }
 \examples{
-
 f.data <- format_rmvmr(
     BXGs = rawdat_rmvmr[,c("ldl_beta","hdl_beta","tg_beta")],
     BYG = rawdat_rmvmr$sbp_beta,
     seBXGs = rawdat_rmvmr[,c("ldl_se","hdl_se","tg_se")],
     seBYG = rawdat_rmvmr$sbp_se,
     RSID = rawdat_rmvmr$snp)
-    
-rmvmr_output<-ivw_rmvmr(f.data,F)
-
-q_object<-pleiotropy_rmvmr(f.data,rmvmr_output)
-
+rmvmr_output <- ivw_rmvmr(f.data, FALSE)
+q_object <- pleiotropy_rmvmr(f.data, rmvmr_output)
 q_object$gq
-q_object$qdat
+head(q_object$qdat)
 }
 \references{
 Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
