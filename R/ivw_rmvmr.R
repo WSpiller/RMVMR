@@ -11,7 +11,6 @@
 #' @importFrom stats lm
 #' @export
 #' @examples
-#'
 #' f.data <- format_rmvmr(
 #'     BXGs = rawdat_rmvmr[,c("ldl_beta","hdl_beta","tg_beta")],
 #'     BYG = rawdat_rmvmr$sbp_beta,
@@ -19,7 +18,6 @@
 #'     seBYG = rawdat_rmvmr$sbp_se,
 #'     RSID = rawdat_rmvmr$snp)
 #' ivw_rmvmr(f.data, TRUE)$coef
-#'
 
 # Define IVW Radial Multivariable MR function: This takes the formatted dataframe from
 # the format_MVMR function as an input, and outputs a summary of effect estimates as well as formatted radial data frames
