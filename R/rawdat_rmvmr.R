@@ -4,7 +4,7 @@
 #' low-density lipoprotein (LDL), high-density lipoprotein (HDL), or triglycerides. Data includes variant rsid numbers,
 #' associations with each lipid fraction, the associations between genetic variants and systolic blood pressure (SBP),
 #' and corresponding standard errors.
-#' 
+#'
 #' rawdat_rmvmr
 #'
 #' @format A data frame with 145 rows and 9 variables. Specifically this includes the following information:
