@@ -8,6 +8,7 @@
 #' @return An dataframe containing MVMR results, including estimated coefficients, their standard errors, t-statistics, and corresponding (two-sided) p-values.
 #' @author Wes Spiller; Eleanor Sanderson; Jack Bowden.
 #' @references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
+#' @importFrom stats lm
 #' @export
 #' @examples
 #'
