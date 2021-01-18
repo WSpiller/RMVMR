@@ -1,2 +1,9 @@
 ^RMVMR\.Rproj$
 ^\.Rproj\.user$
+^LICENSE$
+^Meta$
+^doc$
+^pkgdown$
+^README\.Rmd$       # An Rmarkdown file used to generate README.md
+^cran-comments\.md$ # Comments for CRAN submission
+^.github$
