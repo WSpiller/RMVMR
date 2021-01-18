@@ -29,7 +29,6 @@
 #' @author Wes Spiller; Eleanor Sanderson; Jack Bowden.
 #'
 #' @examples
-#'
 #' head(rawdat_rmvmr)
 
 "rawdat_rmvmr"
