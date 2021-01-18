@@ -158,10 +158,12 @@ plot_rmvmr <- function(r_input, rmvmr){
                                    yend = rmvmr$coef[i,1]*max(p.dat$wj + 5),
                                    color = cpalette[i])
   }
-  
-  C<- C + 
-    scale_color_manual(name="Estimates",breaks=levels(p.dat[,6]),values=cpalette[1:(exp.number)])
-  
+
+  C <- C +
+    ggplot2::scale_color_manual(name = "Estimates",
+                                breaks = levels(p.dat[,6]),
+                                values = cpalette[1:(exp.number)])
+
   multi_return <- function() {
     Out_list <- list("p1" = B,"p2"= C)
     class(Out_list)<-"RMVMR_plot"
