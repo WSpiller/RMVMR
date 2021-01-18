@@ -38,9 +38,6 @@
 
 strength_rmvmr<-function(r_input,gencov){
   
-  library(MVMR)
-  library(ggplot2)
-  library(RadialMR)
   
   invisible(capture.output(MVMR_S<-strength_mvmr(r_input,gencov)))
   
