@@ -15,7 +15,7 @@ Authors@R: c(person("Wes", "Spiller",
                     comment = c(ORCID = "0000-0001-5188-5775")))
 Description: An R package for performing radial multivariable Mendelian randomization analyses.
 Depends: R (>= 3.5)
-License: GPL(>= 2)
+License: GPL-2
 Encoding: UTF-8
 Imports:
   ggplot2,
