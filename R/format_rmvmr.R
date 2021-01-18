@@ -13,14 +13,12 @@
 #'@references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
 #' @export
 #' @examples
-#'
 #' f.data <- format_rmvmr(
 #'  BXGs = rawdat_rmvmr[,c("ldl_beta","hdl_beta","tg_beta")],
 #'  BYG = rawdat_rmvmr$sbp_beta,
 #'  seBXGs = rawdat_rmvmr[,c("ldl_se","hdl_se","tg_se")],
 #'  seBYG = rawdat_rmvmr$sbp_se,
 #'  RSID = rawdat_rmvmr$snp)
-#'     
 #' names(f.data)
 #'
 
