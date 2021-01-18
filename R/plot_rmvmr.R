@@ -28,8 +28,8 @@
 #'     
 #'
 #' 
-#' rmvmr_output<-ivw_rmvmr(f.data, FALSE)
-#' plot_object<-plot_rmvmr(f.data, rmvmr_output)
+#' rmvmr_output <- ivw_rmvmr(f.data, FALSE)
+#' plot_object <- plot_rmvmr(f.data, rmvmr_output)
 #' plot_object$p1
 #' plot_object$p2
 
