@@ -116,9 +116,12 @@ plot_rmvmr <- function(r_input, rmvmr){
     ggplot2::scale_y_continuous(limits = c(min(p.dat$BetaWj - 5), max(p.dat$BetaWj + 5)))
 
   for(i in 1:exp.number){
-    
-    B<-  B + geom_segment(x = 0, xend = max(p.dat$Wj+5), y = 0, yend = rmvmr$coef[i,1]*max(p.dat$Wj+5),color=cpalette[i])
-    
+
+    B <- B + ggplot2::geom_segment(x = 0,
+                                   xend = max(p.dat$Wj + 5),
+                                   y = 0,
+                                   yend = rmvmr$coef[i,1]*max(p.dat$Wj + 5),
+                                   color = cpalette[i])
   }
   
   B<- B + 
