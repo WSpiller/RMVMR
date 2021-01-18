@@ -14,7 +14,7 @@
 #'}
 #'
 #' @author Wes Spiller; Eleanor Sanderson; Jack Bowden.
-#'@references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
+#' @references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
 #' @importFrom stats pchisq
 #' @export
 #' @examples
