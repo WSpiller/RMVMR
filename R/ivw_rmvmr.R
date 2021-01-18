@@ -25,52 +25,52 @@
 # for downstream plotting
 
 ivw_rmvmr<-function(r_input,summary){
-  
+
   #Determine the number of exposures included in the model
   exp.number<-length(names(r_input)[-c(1,2,3)])/2
-  
+
   #Create zero matrix for weight calculations
   tm.weights<-matrix(0L, nrow = length(r_input[,1]), ncol = exp.number)
-  
+
   #Create subset of exposure summary data
   exp.dat<-r_input[,4:(3+exp.number)]
-  
-  
+
+
   #Calculate square root weights wj
   for(i in 1:exp.number){
     tm.weights[,i] = sqrt((exp.dat[,i]^2)/r_input[,3]^2)
   }
-  
+
   #Create zero matrix for ratio calculations
   tm.ratios<-matrix(0L, nrow = length(r_input[,1]), ncol = exp.number)
-  
+
   #Calculate ratio estimates
   for(i in 1:exp.number){
     tm.ratios[,i] = r_input[,2]/exp.dat[,i]
   }
-  
+
   #Create zero matrix for weight times ratio calculations
   tm.wr<-matrix(0L, nrow = length(r_input[,1]), ncol = exp.number)
-  
+
   #Multiply weighting by ratio estimates
   for(i in 1:exp.number){
     tm.wr[,i]<-tm.weights[,i]*tm.ratios[,i]
   }
-  
+
   #Create empty list for plotting data frames
-  
+
   t.list <- vector(mode = "list", length = 3)
-  
+
   # orientate data for X1
-  
+
   for(j in 1:exp.number){
-  
+
   expvec<- 1:exp.number
 
-  
+
   tm.oriented<-matrix(0L, nrow = length(r_input[,1]), ncol = exp.number)
-  
-  
+
+
   for(i in 1:(exp.number)){
 
     if(j == i){
@@ -78,35 +78,35 @@ ivw_rmvmr<-function(r_input,summary){
     }else{
       tm.oriented[,i]<-exp.dat[,expvec[(i)]]*sign(exp.dat[,j])
       tm.oriented[,i]<-tm.oriented[,i] / r_input[,3]
-      
+
     }
 
   }
-  
+
   tempdat<-data.frame(tm.oriented)
-  
+
   t.list[[j]] <- cbind(tm.wr[,j],tempdat)
-  
+
   names(t.list[[j]])[1]<-paste0("Bwj_",j,collapse="")
-  
+
   #Rename columns for ease of interpretation
   for(i in 1:exp.number){
     names(t.list[[j]])[i+1]<- paste0("wj_",i,collapse="")
     }
-  
+
   }
-  
+
   A_sum<-summary(lm(tm.wr[,j]~ -1 + ., tempdat))
-  
+
   A<-summary(lm(tm.wr[,j]~ -1 + ., tempdat))$coef
 
   #Rename the regressors for ease of interpretation
   for(i in 1:exp.number){
     dimnames(A)[[1]][i]<- paste0("exposure",i,collapse="")
   }
-  
+
   if(summary == T){
-    
+
     # Print a few summary elements that are common to both lm and plm model summary objects
     cat("\n")
     cat("Radial Multivariable MR\n")
@@ -117,15 +117,15 @@ ivw_rmvmr<-function(r_input,summary){
     cat("\n")
     cat("\n")
   }
-  
+
   multi_return <- function() {
     Out_list <- list("coef" = A,"data"= t.list)
     class(Out_list)<-"IVW_RMVMR"
-    
+
     return(Out_list)
 }
 
 OUT<-multi_return()
 
-  
+
 }
