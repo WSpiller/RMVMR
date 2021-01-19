@@ -24,14 +24,12 @@ A formatted data frame.
 Reads in summary data. Checks and organises columns for use in calculating multivariable Mendelian Randomization analyses. Where variant IDs are not provided, a vector is generated for variant identification.
 }
 \examples{
-
 f.data <- format_rmvmr(
  BXGs = rawdat_rmvmr[,c("ldl_beta","hdl_beta","tg_beta")],
  BYG = rawdat_rmvmr$sbp_beta,
  seBXGs = rawdat_rmvmr[,c("ldl_se","hdl_se","tg_se")],
  seBYG = rawdat_rmvmr$sbp_se,
  RSID = rawdat_rmvmr$snp)
-    
 names(f.data)
 
 }

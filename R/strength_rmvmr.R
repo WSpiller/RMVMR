@@ -6,7 +6,7 @@
 #' using the \code{format_rmvmr} function. Named exposures in each list refer to the remaining exposures in the strength RMVMR model.
 #'
 #' @param r_input A formatted data frame using the \code{format_rmvmr} function.
-#' @param r_input Calculating heterogeneity statistics using the \code{MVMR} package requires the covariance between the 
+#' @param gencov Calculating heterogeneity statistics using the \code{MVMR} package requires the covariance between the
 #'  effect of the genetic variants on each exposure to be known. This can either be estimated from individual level data,
 #'  be assumed to be zero, or fixed at zero using non-overlapping samples of each exposure GWAS. A value of 0 is used by default.
 #'
@@ -17,99 +17,94 @@
 #'}
 #'@author Wes Spiller; Eleanor Sanderson; Jack Bowden.
 #'@references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
+#' @importFrom utils capture.output
 #' @export
 #' @examples
-#'
 #' f.data <- format_rmvmr(
 #'     BXGs = rawdat_rmvmr[,c("ldl_beta","hdl_beta","tg_beta")],
 #'     BYG = rawdat_rmvmr$sbp_beta,
 #'     seBXGs = rawdat_rmvmr[,c("ldl_se","hdl_se","tg_se")],
 #'     seBYG = rawdat_rmvmr$sbp_se,
 #'     RSID = rawdat_rmvmr$snp)
-#'     
-#' output<-strength_rmvmr(f.data)
-#' 
+#' output <- strength_rmvmr(f.data)
+#'
 #' # The following shows the strength plot and Q statistics for exposure 2,
 #' # regressing exposure 2 upon exposures 1 and 3 (which are labeled exposure 1
 #' # and exposure 2 based on ordering in the RMVMR model).
 #'
-#'output$plot[[2]]
-#'output$qstat[[2]]
+#' output$plot[[2]]
+#' output$qstat[[2]]
 #'
 
-strength_rmvmr<-function(r_input,gencov){
-  
-  library(MVMR)
-  library(ggplot2)
-  library(RadialMR)
-  
-  invisible(capture.output(MVMR_S<-strength_mvmr(r_input,gencov)))
-  
+strength_rmvmr <- function(r_input, gencov){
+
+  invisible(capture.output(MVMR_S <- MVMR::strength_mvmr(r_input,gencov)))
+
   exp.number<-length(names(r_input)[-c(1,2,3)])/2
-  
+
   plots <- vector('list', exp.number)
   Qs <- vector('list', exp.number)
   Qall <- vector('list', exp.number)
-  
+
   for(i in 1:exp.number){
-    
+
     if(exp.number == 2){
-      
-      tdat<-format_radial(r_input[,(4):(3+exp.number)][-i],r_input[,(3+i)],r_input[,(4+exp.number):(3+exp.number+exp.number)][-i],
+
+      tdat<-RadialMR::format_radial(r_input[,(4):(3+exp.number)][-i],r_input[,(3+i)],r_input[,(4+exp.number):(3+exp.number+exp.number)][-i],
                          r_input[,(3+exp.number+i)],r_input[,1])
-      
-      A<-ivw_radial(tdat,0.05/nrow(tdat),1,0.0001,F)
-      
+
+      A <- RadialMR::ivw_radial(tdat,0.05/nrow(tdat),1,0.0001,F)
+
       plots[[i]] <- local({
         i <- i
-        p1 <- plot_radial(A)
+        p1 <- RadialMR::plot_radial(A)
       })
-      
+
       Qs[[i]] <- local({
         i <- i
         qst <- A$qstatistic
       })
-      
+
       Qall[[i]] <- local({
         i <- i
         qll <- A$data
       })
-      
+
     }else{
-      
+
       tdat<-format_rmvmr(r_input[,(4):(3+exp.number)][-i],r_input[,(3+i)],r_input[,(4+exp.number):(3+exp.number+exp.number)][-i],
                          r_input[,(3+exp.number+i)],r_input[,1])
-      
+
       A<-ivw_rmvmr(tdat, F)
-      
+
       G<-pleiotropy_rmvmr(tdat,A)
-      
+
       plots[[i]] <- local({
         i <- i
         p1 <- plot_rmvmr(tdat,A)$p2
       })
-      
+
       Qs[[i]] <- local({
         i <- i
         qst <- G$gq
       })
-      
+
       Qall[[i]] <- local({
         i <- i
         qll <- G$qdat
       })
-      
+
     }
-    
+
     }
-  
+
   multi_return <- function() {
     Out_list <- list("plot" = plots,"qstat"= Qs,"qall"= Qall, "f"=MVMR_S)
     class(Out_list)<-"S_RMVMR"
-    
+
     return(Out_list)
   }
-  
+
   OUT<-multi_return()
-  
+
 }
