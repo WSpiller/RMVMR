@@ -31,6 +31,12 @@
 
 pleiotropy_rmvmr <- function(r_input, rmvmr){
 
+  # Perform check that r_input has been formatted using format_rmvmr function
+  if(!("rmvmr_format" %in%
+       class(r_input))) {
+    stop('The class of the data object must be "rmvmr_format", please resave the object with the output of format_rmvmr().')
+  }
+
   # Extract MVMR estimates
   rmvmr<-rmvmr$coef
 
