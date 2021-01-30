@@ -11,6 +11,7 @@
 #' @importFrom stats lm
 #' @export
 #' @examples
+#' # Example using format_rmvmr formatted data
 #' f.data <- format_rmvmr(
 #'     BXGs = rawdat_rmvmr[,c("ldl_beta","hdl_beta","tg_beta")],
 #'     BYG = rawdat_rmvmr$sbp_beta,
