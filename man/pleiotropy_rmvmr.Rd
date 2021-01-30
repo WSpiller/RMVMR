@@ -7,9 +7,9 @@
 pleiotropy_rmvmr(r_input, rmvmr)
 }
 \arguments{
-\item{r_input}{A formatted data frame using the \code{format_rmvmr} function or an object of class \code{MRMVInput} from \code{\link[MendelianRandomization:mr_mvinput]{MendelianRandomization::mr_mvinput}}}
+\item{r_input}{A formatted data frame using the \code{\link{format_rmvmr}} function or an object of class \code{MRMVInput} from \code{\link[MendelianRandomization:mr_mvinput]{MendelianRandomization::mr_mvinput}}}
 
-\item{rmvmr}{An object containing the output from the \code{ivw_rmvmr} function of class \code{IVW_RMVMR}.}
+\item{rmvmr}{An object containing the output from the \code{\link{ivw_rmvmr}} function of class \code{IVW_RMVMR}.}
 }
 \value{
 An object of class \code{"RMVMR_Q"} containing the following components:\describe{
@@ -19,7 +19,7 @@ An object of class \code{"RMVMR_Q"} containing the following components:\describ
 }
 \description{
 Generates Q-statistics quantifying the degree of heterogeneity in univariate Radial MR analyses applying a correction using the
-output from \code{ivw_rmvmr}. The function returns two data frames. The first data frame includes the global Q-statistic for each exposure after applying
+output from \code{\link{ivw_rmvmr}}. The function returns two data frames. The first data frame includes the global Q-statistic for each exposure after applying
 a correction, as well as a corresponding p-value. The second data frame contains the individual Q-statistic for each SNP in the corrected univariate
 analyses, relative to the exposure given in column \code{exposure}.
 }

@@ -7,9 +7,9 @@
 plot_rmvmr(r_input, rmvmr)
 }
 \arguments{
-\item{r_input}{A formatted data frame using the \code{format_rmvmr} function or an object of class \code{MRMVInput} from \code{\link[MendelianRandomization:mr_mvinput]{MendelianRandomization::mr_mvinput}}}
+\item{r_input}{A formatted data frame using the \code{\link{format_rmvmr}} function or an object of class \code{MRMVInput} from \code{\link[MendelianRandomization:mr_mvinput]{MendelianRandomization::mr_mvinput}}}
 
-\item{rmvmr}{An object containing the output from the \code{ivw_rmvmr} function of class \code{IVW_RMVMR}.}
+\item{rmvmr}{An object containing the output from the \code{\link{ivw_rmvmr}} function of class \code{IVW_RMVMR}.}
 }
 \value{
 An object of class \code{"RMVMR_plot"} containing the following components:\describe{
@@ -20,7 +20,7 @@ An object of class \code{"RMVMR_plot"} containing the following components:\desc
 \description{
 Generates two radial multivariable Mendelian randomization (MVMR) plots. The first plot shows shows the estimated direct effect for each exposure obtained by fitting a radial MVMR model.
 Each data point shows the square root weighting for each SNP on the x-axis, and product of the ratio estimate and square root weighting for each SNP on the y-axis. These values are obtained
-by performing a univariate radial MR analysis for each exposure using the SNPs displayed, specifically through use of the \code{RadialMR::ivw_radial} function. Only SNPs strongly associated with the corresponding
+by performing a univariate radial MR analysis for each exposure using the SNPs displayed, specifically through use of the \code{\link[RadialMR:ivw_radial]{RadialMR::ivw_radial}} function. Only SNPs strongly associated with the corresponding
 exposure are used, such that their first stage F-statistic is greater than 10. The second plot applies a correction to each ratio estimate. In both plots, the distance of each observation from the
 corresponding regression line is proportional to the contribution of that SNP towards global heterogeneity.
 }

@@ -7,7 +7,7 @@
 ivw_rmvmr(r_input, summary)
 }
 \arguments{
-\item{r_input}{A formatted data frame using the \code{format_rmvmr} function or an object of class \code{MRMVInput} from \code{\link[MendelianRandomization:mr_mvinput]{MendelianRandomization::mr_mvinput}}}
+\item{r_input}{A formatted data frame using the \code{\link{format_rmvmr}} function or an object of class \code{MRMVInput} from \code{\link[MendelianRandomization:mr_mvinput]{MendelianRandomization::mr_mvinput}}}
 
 \item{summary}{A logical argument (\code{TRUE} or \code{FALSE}) indicating whether a summary of results should be presented (default= \code{TRUE}).}
 }
