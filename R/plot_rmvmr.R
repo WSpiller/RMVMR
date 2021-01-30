@@ -31,6 +31,12 @@
 
 plot_rmvmr <- function(r_input, rmvmr){
 
+  # Perform check that r_input has been formatted using format_rmvmr function
+  if(!("rmvmr_format" %in%
+       class(r_input))) {
+    stop('The class of the data object must be "rmvmr_format", please resave the object with the output of format_rmvmr().')
+  }
+
   # to suppress the R CMD check note about: no visible binding for global variable
   BetaWj <- Group <- Wj <- wj <- ref_exposure <- corrected_beta <- NULL
 
