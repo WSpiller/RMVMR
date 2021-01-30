@@ -19,6 +19,17 @@
 #'     seBYG = rawdat_rmvmr$sbp_se,
 #'     RSID = rawdat_rmvmr$snp)
 #' ivw_rmvmr(f.data, TRUE)
+#'
+#' # Example using MRMVInput formatted data from the
+#' #  MendelianRandomization package
+#' bx <- as.matrix(rawdat_rmvmr[,c("ldl_beta", "hdl_beta", "tg_beta")])
+#' bxse <- as.matrix(rawdat_rmvmr[,c("ldl_se", "hdl_se", "tg_se")])
+#' dat <- MendelianRandomization::mr_mvinput(bx = bx,
+#'                                           bxse = bxse,
+#'                                           by = rawdat_rmvmr$sbp_beta,
+#'                                           byse = rawdat_rmvmr$sbp_se,
+#'                                           snps = rawdat_rmvmr$snp)
+#' ivw_rmvmr(r_input = dat, summary = TRUE)
 
 # Define IVW Radial Multivariable MR function: This takes the formatted dataframe from
 # the format_MVMR function as an input, and outputs a summary of effect estimates as well as formatted radial data frames
