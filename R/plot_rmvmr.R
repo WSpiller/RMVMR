@@ -6,7 +6,7 @@
 #' exposure are used, such that their first stage F-statistic is greater than 10. The second plot applies a correction to each ratio estimate. In both plots, the distance of each observation from the
 #' corresponding regression line is proportional to the contribution of that SNP towards global heterogeneity.
 #'
-#' @param r_input A formatted data frame using the \code{format_rmvmr} function.
+#' @param r_input A formatted data frame using the \code{format_rmvmr} function or an object of class `MRMVInput` from [`MendelianRandomization::mr_mvinput`]
 #' @param rmvmr An object containing the output from the \code{ivw_rmvmr} function of class \code{IVW_RMVMR}.
 #'
 #' @return An object of class \code{"RMVMR_plot"} containing the following components:\describe{
