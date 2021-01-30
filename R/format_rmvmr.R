@@ -95,7 +95,7 @@ format_rmvmr<-function(BXGs,BYG,seBXGs,seBYG,RSID){
 
   #Append rmvmr_format class to output data frame
   class(dat) <- append(class(dat),
-                        "rmvmr_format")
+                       c("rmvmr_format", "mvmr_format"))
 
   # The function returns the formatted dataframe
 
