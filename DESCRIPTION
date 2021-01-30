@@ -24,6 +24,8 @@ Imports:
   MVMR,
   plotly,
   RadialMR
+Suggests:
+  MendelianRandomization
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
