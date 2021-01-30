@@ -7,7 +7,7 @@
 #' @param seBXGs A matrix containing standard errors corresponding to the matrix of beta-coefficients \code{BXGs}.
 #' @param seBYG A numeric vector of standard errors corresponding to the beta-coefficients \code{BYG}.
 #' @param RSID A vector of names for genetic variants included in the analysis. If variant IDs are not provided (\code{RSID="NULL"}), a vector of ID numbers will be generated.
-#' @return A formatted data frame.
+#' @return A formatted data frame with additional classes `rmvmr_format` and `mvmr_format`
 #'
 #' @author Wes Spiller; Eleanor Sanderson; Jack Bowden.
 #'@references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
