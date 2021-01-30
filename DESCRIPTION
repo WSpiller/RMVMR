@@ -1,6 +1,6 @@
 Package: RMVMR
 Title: RMVMR
-Version: 0.1
+Version: 0.2
 Authors@R: c(person("Wes", "Spiller", 
                     email = "wes.spiller@bristol.ac.uk", 
                     role = c("aut", "cre"),
