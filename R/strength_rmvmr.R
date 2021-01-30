@@ -38,6 +38,12 @@
 
 strength_rmvmr <- function(r_input, gencov){
 
+  # Perform check that r_input has been formatted using format_rmvmr function
+  if(!("rmvmr_format" %in%
+       class(r_input))) {
+    stop('The class of the data object must be "rmvmr_format", please resave the object with the output of format_rmvmr().')
+  }
+
   invisible(capture.output(MVMR_S <- MVMR::strength_mvmr(r_input,gencov)))
 
   exp.number<-length(names(r_input)[-c(1,2,3)])/2
