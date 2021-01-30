@@ -25,6 +25,12 @@
 
 ivw_rmvmr<-function(r_input,summary){
 
+  # Perform check that r_input has been formatted using format_rmvmr function
+  if(!("rmvmr_format" %in%
+       class(r_input))) {
+    stop('The class of the data object must be "rmvmr_format", please resave the object with the output of format_rmvmr().')
+  }
+
   #Determine the number of exposures included in the model
   exp.number<-length(names(r_input)[-c(1,2,3)])/2
 
