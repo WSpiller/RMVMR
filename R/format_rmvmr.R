@@ -20,7 +20,7 @@
 #'  seBYG = rawdat_rmvmr$sbp_se,
 #'  RSID = rawdat_rmvmr$snp)
 #' names(f.data)
-#'
+#' class(f.data)
 
 #Function for formatting RMVMR data frame
 
