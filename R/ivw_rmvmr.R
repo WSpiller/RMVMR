@@ -25,6 +25,11 @@
 
 ivw_rmvmr<-function(r_input,summary){
 
+  # convert MRMVInput object to mvmr_format
+  if ("MRMVInput" %in% class(r_input)) {
+    r_input <- mrmvinput_to_rmvmr_format(r_input)
+  }
+
   # Perform check that r_input has been formatted using format_rmvmr function
   if(!("rmvmr_format" %in%
        class(r_input))) {
