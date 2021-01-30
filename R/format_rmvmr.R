@@ -10,7 +10,7 @@
 #' @return A formatted data frame with additional classes `rmvmr_format` and `mvmr_format`
 #'
 #' @author Wes Spiller; Eleanor Sanderson; Jack Bowden.
-#'@references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
+#' @references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
 #' @export
 #' @examples
 #' f.data <- format_rmvmr(
