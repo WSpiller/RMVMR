@@ -2,7 +2,7 @@
 #'
 #' Fits a radial IVW multivariable Mendelian randomization model using first order weights.
 #'
-#' @param r_input A formatted data frame using the \code{format_rmvmr} function.
+#' @param r_input A formatted data frame using the \code{format_rmvmr} function or an object of class `MRMVInput` from [`MendelianRandomization::mr_mvinput`]
 #' @param summary A logical argument (\code{TRUE} or \code{FALSE}) indicating whether a summary of results should be presented (default= \code{TRUE}).
 #'
 #' @return An dataframe containing MVMR results, including estimated coefficients, their standard errors, t-statistics, and corresponding (two-sided) p-values.
