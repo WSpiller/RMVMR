@@ -18,7 +18,7 @@ format_rmvmr(BXGs, BYG, seBXGs, seBYG, RSID)
 \item{RSID}{A vector of names for genetic variants included in the analysis. If variant IDs are not provided (\code{RSID="NULL"}), a vector of ID numbers will be generated.}
 }
 \value{
-A formatted data frame.
+A formatted data frame with additional classes \code{rmvmr_format} and \code{mvmr_format}
 }
 \description{
 Reads in summary data. Checks and organises columns for use in calculating multivariable Mendelian Randomization analyses. Where variant IDs are not provided, a vector is generated for variant identification.
@@ -31,7 +31,7 @@ f.data <- format_rmvmr(
  seBYG = rawdat_rmvmr$sbp_se,
  RSID = rawdat_rmvmr$snp)
 names(f.data)
-
+class(f.data)
 }
 \references{
 Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.

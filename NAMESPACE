@@ -2,6 +2,7 @@
 
 export(format_rmvmr)
 export(ivw_rmvmr)
+export(mrmvinput_to_rmvmr_format)
 export(pleiotropy_rmvmr)
 export(plot_rmvmr)
 export(strength_rmvmr)

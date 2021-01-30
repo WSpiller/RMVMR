@@ -7,7 +7,7 @@
 strength_rmvmr(r_input, gencov)
 }
 \arguments{
-\item{r_input}{A formatted data frame using the \code{format_rmvmr} function.}
+\item{r_input}{A formatted data frame using the \code{format_rmvmr} function or an object of class \code{MRMVInput} from \code{\link[MendelianRandomization:mr_mvinput]{MendelianRandomization::mr_mvinput}}}
 
 \item{gencov}{Calculating heterogeneity statistics using the \code{MVMR} package requires the covariance between the
 effect of the genetic variants on each exposure to be known. This can either be estimated from individual level data,

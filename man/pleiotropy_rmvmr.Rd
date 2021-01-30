@@ -7,7 +7,7 @@
 pleiotropy_rmvmr(r_input, rmvmr)
 }
 \arguments{
-\item{r_input}{A formatted data frame using the \code{format_rmvmr} function.}
+\item{r_input}{A formatted data frame using the \code{format_rmvmr} function or an object of class \code{MRMVInput} from \code{\link[MendelianRandomization:mr_mvinput]{MendelianRandomization::mr_mvinput}}}
 
 \item{rmvmr}{An object containing the output from the \code{ivw_rmvmr} function of class \code{IVW_RMVMR}.}
 }
