@@ -3,9 +3,9 @@
 #' Calculates Q-statistics quantifying instrument strength. Each exposure is treated as an outcome sequentially, fitting the remaining
 #' exposures within a radial MVMR model. High Q-statistics indicate a high instrument strength, comparable to the Q_x statistic in conventional
 #' MVMR analyses. The function outputs a list of plots, global Q-statistics, and individual Q-contributions indexed by the exposure number ordered
-#' using the \code{format_rmvmr} function. Named exposures in each list refer to the remaining exposures in the strength RMVMR model.
+#' using the [`format_rmvmr`] function. Named exposures in each list refer to the remaining exposures in the strength RMVMR model.
 #'
-#' @param r_input A formatted data frame using the \code{format_rmvmr} function.
+#' @param r_input A formatted data frame using the [`format_rmvmr`] function or an object of class `MRMVInput` from [`MendelianRandomization::mr_mvinput`]
 #' @param gencov Calculating heterogeneity statistics using the \code{MVMR} package requires the covariance between the
 #'  effect of the genetic variants on each exposure to be known. This can either be estimated from individual level data,
 #'  be assumed to be zero, or fixed at zero using non-overlapping samples of each exposure GWAS. A value of 0 is used by default.
@@ -37,6 +37,17 @@
 #'
 
 strength_rmvmr <- function(r_input, gencov){
+
+  # convert MRMVInput object to mvmr_format
+  if ("MRMVInput" %in% class(r_input)) {
+    r_input <- mrmvinput_to_rmvmr_format(r_input)
+  }
+
+  # Perform check that r_input has been formatted using format_rmvmr function
+  if(!("rmvmr_format" %in%
+       class(r_input))) {
+    stop('The class of the data object must be "rmvmr_format", please resave the object with the output of format_rmvmr().')
+  }
 
   invisible(capture.output(MVMR_S <- MVMR::strength_mvmr(r_input,gencov)))
 

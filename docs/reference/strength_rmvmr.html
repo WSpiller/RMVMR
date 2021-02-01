@@ -75,7 +75,7 @@ using the format_rmvmr function. Named exposures in each list refer to the remai
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RMVMR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2</span>
       </span>
     </div>
 
@@ -83,7 +83,7 @@ using the format_rmvmr function. Named exposures in each list refer to the remai
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -94,7 +94,7 @@ using the format_rmvmr function. Named exposures in each list refer to the remai
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/WSpiller/RMVMR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -120,7 +120,7 @@ using the format_rmvmr function. Named exposures in each list refer to the remai
     <p>Calculates Q-statistics quantifying instrument strength. Each exposure is treated as an outcome sequentially, fitting the remaining
 exposures within a radial MVMR model. High Q-statistics indicate a high instrument strength, comparable to the Q_x statistic in conventional
 MVMR analyses. The function outputs a list of plots, global Q-statistics, and individual Q-contributions indexed by the exposure number ordered
-using the <code>format_rmvmr</code> function. Named exposures in each list refer to the remaining exposures in the strength RMVMR model.</p>
+using the <code><a href='format_rmvmr.html'>format_rmvmr</a></code> function. Named exposures in each list refer to the remaining exposures in the strength RMVMR model.</p>
     </div>
 
     <pre class="usage"><span class='fu'>strength_rmvmr</span><span class='op'>(</span><span class='va'>r_input</span>, <span class='va'>gencov</span><span class='op'>)</span></pre>
@@ -130,7 +130,7 @@ using the <code>format_rmvmr</code> function. Named exposures in each list refer
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>r_input</th>
-      <td><p>A formatted data frame using the <code>format_rmvmr</code> function.</p></td>
+      <td><p>A formatted data frame using the <code><a href='format_rmvmr.html'>format_rmvmr</a></code> function or an object of class <code>MRMVInput</code> from <code><a href='https://rdrr.io/pkg/MendelianRandomization/man/mr_mvinput.html'>MendelianRandomization::mr_mvinput</a></code></p></td>
     </tr>
     <tr>
       <th>gencov</th>

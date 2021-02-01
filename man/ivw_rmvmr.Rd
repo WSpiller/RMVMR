@@ -7,7 +7,7 @@
 ivw_rmvmr(r_input, summary)
 }
 \arguments{
-\item{r_input}{A formatted data frame using the \code{format_rmvmr} function.}
+\item{r_input}{A formatted data frame using the \code{\link{format_rmvmr}} function or an object of class \code{MRMVInput} from \code{\link[MendelianRandomization:mr_mvinput]{MendelianRandomization::mr_mvinput}}}
 
 \item{summary}{A logical argument (\code{TRUE} or \code{FALSE}) indicating whether a summary of results should be presented (default= \code{TRUE}).}
 }
@@ -18,13 +18,25 @@ An dataframe containing MVMR results, including estimated coefficients, their st
 Fits a radial IVW multivariable Mendelian randomization model using first order weights.
 }
 \examples{
+# Example using format_rmvmr formatted data
 f.data <- format_rmvmr(
     BXGs = rawdat_rmvmr[,c("ldl_beta","hdl_beta","tg_beta")],
     BYG = rawdat_rmvmr$sbp_beta,
     seBXGs = rawdat_rmvmr[,c("ldl_se","hdl_se","tg_se")],
     seBYG = rawdat_rmvmr$sbp_se,
     RSID = rawdat_rmvmr$snp)
-ivw_rmvmr(f.data, TRUE)$coef
+ivw_rmvmr(f.data, TRUE)
+
+# Example using MRMVInput formatted data from the
+#  MendelianRandomization package
+bx <- as.matrix(rawdat_rmvmr[,c("ldl_beta", "hdl_beta", "tg_beta")])
+bxse <- as.matrix(rawdat_rmvmr[,c("ldl_se", "hdl_se", "tg_se")])
+dat <- MendelianRandomization::mr_mvinput(bx = bx,
+                                          bxse = bxse,
+                                          by = rawdat_rmvmr$sbp_beta,
+                                          byse = rawdat_rmvmr$sbp_se,
+                                          snps = rawdat_rmvmr$snp)
+ivw_rmvmr(r_input = dat, summary = TRUE)
 }
 \references{
 Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.

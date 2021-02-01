@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RMVMR</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -91,7 +91,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/WSpiller/RMVMR/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -146,7 +146,7 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A formatted data frame.</p>
+    <p>A formatted data frame with additional classes <code>rmvmr_format</code> and <code>mvmr_format</code></p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.</p>
@@ -163,8 +163,8 @@
  RSID <span class='op'>=</span> <span class='va'>rawdat_rmvmr</span><span class='op'>$</span><span class='va'>snp</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>f.data</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "SNP"      "betaYG"   "sebetaYG" "betaX1"   "betaX2"   "betaX3"   "sebetaX1"
-#&gt; [8] "sebetaX2" "sebetaX3"</div><div class='input'>
-</div></pre>
+#&gt; [8] "sebetaX2" "sebetaX3"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>f.data</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "data.frame"   "rmvmr_format" "mvmr_format" </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

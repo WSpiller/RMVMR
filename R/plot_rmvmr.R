@@ -2,12 +2,12 @@
 #'
 #' Generates two radial multivariable Mendelian randomization (MVMR) plots. The first plot shows shows the estimated direct effect for each exposure obtained by fitting a radial MVMR model.
 #' Each data point shows the square root weighting for each SNP on the x-axis, and product of the ratio estimate and square root weighting for each SNP on the y-axis. These values are obtained
-#' by performing a univariate radial MR analysis for each exposure using the SNPs displayed, specifically through use of the \code{RadialMR::ivw_radial} function. Only SNPs strongly associated with the corresponding
+#' by performing a univariate radial MR analysis for each exposure using the SNPs displayed, specifically through use of the [`RadialMR::ivw_radial`] function. Only SNPs strongly associated with the corresponding
 #' exposure are used, such that their first stage F-statistic is greater than 10. The second plot applies a correction to each ratio estimate. In both plots, the distance of each observation from the
 #' corresponding regression line is proportional to the contribution of that SNP towards global heterogeneity.
 #'
-#' @param r_input A formatted data frame using the \code{format_rmvmr} function.
-#' @param rmvmr An object containing the output from the \code{ivw_rmvmr} function of class \code{IVW_RMVMR}.
+#' @param r_input A formatted data frame using the [`format_rmvmr`] function or an object of class `MRMVInput` from [`MendelianRandomization::mr_mvinput`]
+#' @param rmvmr An object containing the output from the [`ivw_rmvmr`] function of class \code{IVW_RMVMR}.
 #'
 #' @return An object of class \code{"RMVMR_plot"} containing the following components:\describe{
 #' \item{\code{p1}}{A radial MVMR plot without correction}
@@ -30,6 +30,17 @@
 #' plot_object$p2
 
 plot_rmvmr <- function(r_input, rmvmr){
+
+  # convert MRMVInput object to mvmr_format
+  if ("MRMVInput" %in% class(r_input)) {
+    r_input <- mrmvinput_to_rmvmr_format(r_input)
+  }
+
+  # Perform check that r_input has been formatted using format_rmvmr function
+  if(!("rmvmr_format" %in%
+       class(r_input))) {
+    stop('The class of the data object must be "rmvmr_format", please resave the object with the output of format_rmvmr().')
+  }
 
   # to suppress the R CMD check note about: no visible binding for global variable
   BetaWj <- Group <- Wj <- wj <- ref_exposure <- corrected_beta <- NULL

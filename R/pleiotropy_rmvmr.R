@@ -1,12 +1,12 @@
 #' pleiotropy_rmvmr
 #'
 #' Generates Q-statistics quantifying the degree of heterogeneity in univariate Radial MR analyses applying a correction using the
-#' output from \code{ivw_rmvmr}. The function returns two data frames. The first data frame includes the global Q-statistic for each exposure after applying
+#' output from [`ivw_rmvmr`]. The function returns two data frames. The first data frame includes the global Q-statistic for each exposure after applying
 #' a correction, as well as a corresponding p-value. The second data frame contains the individual Q-statistic for each SNP in the corrected univariate
 #' analyses, relative to the exposure given in column \code{exposure}.
 #'
-#' @param r_input A formatted data frame using the \code{format_rmvmr} function.
-#' @param rmvmr An object containing the output from the \code{ivw_rmvmr} function of class \code{IVW_RMVMR}.
+#' @param r_input A formatted data frame using the [`format_rmvmr`] function or an object of class `MRMVInput` from [`MendelianRandomization::mr_mvinput`]
+#' @param rmvmr An object containing the output from the [`ivw_rmvmr`] function of class \code{IVW_RMVMR}.
 #'
 #' @return An object of class \code{"RMVMR_Q"} containing the following components:\describe{
 #' \item{\code{gq}}{A data frame containing the global Q-statistic and p-value after applying a correction for each exposure}
@@ -30,6 +30,17 @@
 #' head(q_object$qdat)
 
 pleiotropy_rmvmr <- function(r_input, rmvmr){
+
+  # convert MRMVInput object to mvmr_format
+  if ("MRMVInput" %in% class(r_input)) {
+    r_input <- mrmvinput_to_rmvmr_format(r_input)
+  }
+
+  # Perform check that r_input has been formatted using format_rmvmr function
+  if(!("rmvmr_format" %in%
+       class(r_input))) {
+    stop('The class of the data object must be "rmvmr_format", please resave the object with the output of format_rmvmr().')
+  }
 
   # Extract MVMR estimates
   rmvmr<-rmvmr$coef

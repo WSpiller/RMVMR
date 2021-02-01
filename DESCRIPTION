@@ -1,6 +1,6 @@
 Package: RMVMR
 Title: RMVMR
-Version: 0.1
+Version: 0.2
 Authors@R: c(person("Wes", "Spiller", 
                     email = "wes.spiller@bristol.ac.uk", 
                     role = c("aut", "cre"),
@@ -24,6 +24,8 @@ Imports:
   MVMR,
   plotly,
   RadialMR
+Suggests:
+  MendelianRandomization
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
