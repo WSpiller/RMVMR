@@ -127,7 +127,7 @@ ivw_rmvmr<-function(r_input,summary = TRUE){
     dimnames(A)[[1]][i]<- paste0("exposure",i,collapse="")
   }
 
-  if(summary == T){
+  if(summary == TRUE){
 
     # Print a few summary elements that are common to both lm and plm model summary objects
     cat("\n")
