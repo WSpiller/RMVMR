@@ -4,7 +4,7 @@
 \alias{ivw_rmvmr}
 \title{ivw_rmvmr}
 \usage{
-ivw_rmvmr(r_input, summary)
+ivw_rmvmr(r_input, summary = TRUE)
 }
 \arguments{
 \item{r_input}{A formatted data frame using the \code{\link{format_rmvmr}} function or an object of class \code{MRMVInput} from \code{\link[MendelianRandomization:mr_mvinput]{MendelianRandomization::mr_mvinput}}}
