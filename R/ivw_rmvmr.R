@@ -35,7 +35,7 @@
 # the format_MVMR function as an input, and outputs a summary of effect estimates as well as formatted radial data frames
 # for downstream plotting
 
-ivw_rmvmr<-function(r_input,summary){
+ivw_rmvmr<-function(r_input,summary = TRUE){
 
   # convert MRMVInput object to mvmr_format
   if ("MRMVInput" %in% class(r_input)) {
@@ -127,7 +127,7 @@ ivw_rmvmr<-function(r_input,summary){
     dimnames(A)[[1]][i]<- paste0("exposure",i,collapse="")
   }
 
-  if(summary == T){
+  if(summary == TRUE){
 
     # Print a few summary elements that are common to both lm and plm model summary objects
     cat("\n")
