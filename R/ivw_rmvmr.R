@@ -8,7 +8,6 @@
 #' @return An dataframe containing MVMR results, including estimated coefficients, their standard errors, t-statistics, and corresponding (two-sided) p-values.
 #' @author Wes Spiller; Eleanor Sanderson; Jack Bowden.
 #' @references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
-#' @importFrom stats lm
 #' @export
 #' @examples
 #' # Example using format_rmvmr formatted data
@@ -120,9 +119,9 @@ ivw_rmvmr<-function(r_input,summary = TRUE){
 
   }
 
-  A_sum<-summary(lm(tm.wr[,j]~ -1 + ., tempdat))
+  A_sum<-summary(stats::lm(tm.wr[,j]~ -1 + ., tempdat))
 
-  A<-summary(lm(tm.wr[,j]~ -1 + ., tempdat))$coef
+  A<-summary(stats::lm(tm.wr[,j]~ -1 + ., tempdat))$coef
 
   #Rename the regressors for ease of interpretation
   for(i in 1:exp.number){
