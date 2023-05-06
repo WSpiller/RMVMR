@@ -14,10 +14,9 @@
 #' \item{\code{plot}}{A list containing plots for RMVMR analyses regressing each exposure sequentially upon remaining exposures in the \code{r_input} object. Plots are indexed by the exposure number serving as the outcome for the RMVMR analysis}
 #' \item{\code{qstat}}{A list containing global Q-statistics for RMVMR analyses regressing each exposure sequentially upon remaining exposures in the \code{r_input} object. Indexing follows that of \code{plots} and p-values for global heterogeneity are provided}
 #' \item{\code{qall}}{A list containing the individual Q-statistics and data for RMVMR analyses regressing each exposure sequentially upon remaining exposures in the \code{r_input} object. Indexing follows that of \code{plots}}
-#'}
-#'@author Wes Spiller; Eleanor Sanderson; Jack Bowden.
-#'@references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
-#' @importFrom utils capture.output
+#' }
+#' @author Wes Spiller; Eleanor Sanderson; Jack Bowden.
+#' @references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
 #' @export
 #' @examples
 #' f.data <- format_rmvmr(
