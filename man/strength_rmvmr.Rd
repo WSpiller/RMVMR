@@ -41,7 +41,6 @@ output <- strength_rmvmr(f.data)
 
 output$plot[[2]]
 output$qstat[[2]]
-
 }
 \references{
 Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
