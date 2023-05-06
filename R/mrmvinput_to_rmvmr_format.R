@@ -7,6 +7,7 @@
 #' @export
 #' @return data.frame with additoinal classes `rmvmr_format`, the RMVMR format, and `mvmr_format`.
 #' @examples
+#' if (require("MendelianRandomization", quietly = TRUE)) {
 #' bx <- as.matrix(rawdat_rmvmr[,c("ldl_beta", "hdl_beta")])
 #' bxse <- as.matrix(rawdat_rmvmr[,c("ldl_se", "hdl_se")])
 #' dat <- MendelianRandomization::mr_mvinput(bx = bx,
@@ -17,6 +18,7 @@
 #' dat <- mrmvinput_to_rmvmr_format(dat)
 #' head(dat)
 #' class(dat)
+#' }
 mrmvinput_to_rmvmr_format <- function(dat) {
   if (!("MRMVInput" %in% class(dat))) {
     stop('The class of the input data object must be "MRMVInput"')
