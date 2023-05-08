@@ -9,3 +9,4 @@
 ^cran-comments\.md$ # Comments for CRAN submission
 ^.github$
 .Rhistory
+^_pkgdown\.yml$
