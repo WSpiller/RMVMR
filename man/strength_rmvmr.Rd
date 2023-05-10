@@ -4,7 +4,7 @@
 \alias{strength_rmvmr}
 \title{strength_rmvmr}
 \usage{
-strength_rmvmr(r_input, gencov)
+strength_rmvmr(r_input, gencov = 0)
 }
 \arguments{
 \item{r_input}{A formatted data frame using the \code{\link{format_rmvmr}} function or an object of class \code{MRMVInput} from \code{\link[MendelianRandomization:mr_mvinput]{MendelianRandomization::mr_mvinput}}}
