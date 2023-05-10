@@ -8,7 +8,6 @@
 #' @return An dataframe containing MVMR results, including estimated coefficients, their standard errors, t-statistics, and corresponding (two-sided) p-values.
 #' @author Wes Spiller; Eleanor Sanderson; Jack Bowden.
 #' @references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
-#' @importFrom stats lm
 #' @export
 #' @examples
 #' # Example using format_rmvmr formatted data
@@ -22,6 +21,7 @@
 #'
 #' # Example using MRMVInput formatted data from the
 #' #  MendelianRandomization package
+#' if (require("MendelianRandomization", quietly = TRUE)) {
 #' bx <- as.matrix(rawdat_rmvmr[,c("ldl_beta", "hdl_beta", "tg_beta")])
 #' bxse <- as.matrix(rawdat_rmvmr[,c("ldl_se", "hdl_se", "tg_se")])
 #' dat <- MendelianRandomization::mr_mvinput(bx = bx,
@@ -30,6 +30,7 @@
 #'                                           byse = rawdat_rmvmr$sbp_se,
 #'                                           snps = rawdat_rmvmr$snp)
 #' ivw_rmvmr(r_input = dat, summary = TRUE)
+#' }
 
 # Define IVW Radial Multivariable MR function: This takes the formatted dataframe from
 # the format_MVMR function as an input, and outputs a summary of effect estimates as well as formatted radial data frames
@@ -118,9 +119,9 @@ ivw_rmvmr<-function(r_input,summary = TRUE){
 
   }
 
-  A_sum<-summary(lm(tm.wr[,j]~ -1 + ., tempdat))
+  A_sum<-summary(stats::lm(tm.wr[,j]~ -1 + ., tempdat))
 
-  A<-summary(lm(tm.wr[,j]~ -1 + ., tempdat))$coef
+  A<-summary(stats::lm(tm.wr[,j]~ -1 + ., tempdat))$coef
 
   #Rename the regressors for ease of interpretation
   for(i in 1:exp.number){

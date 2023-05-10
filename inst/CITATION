@@ -1,0 +1,15 @@
+bibentry(
+  bibtype = "Article",
+  header = "To cite RMVMR in publications please use:",
+  author = c(
+    person("W.", "Spiller"),
+    person("J.", "Bowden"),
+    person("E.", "Sanderson")
+  ),
+  title = "{Estimating and visualising multivariable Mendelian randomization analyses within a radial framework}",
+  journal = "medRxiv",
+  year = "2023",
+  pages = "2023.04.04.23288134",
+  key = "rmvmr",
+  doi = "10.1101/2023.04.04.23288134"
+)

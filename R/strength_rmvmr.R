@@ -14,10 +14,9 @@
 #' \item{\code{plot}}{A list containing plots for RMVMR analyses regressing each exposure sequentially upon remaining exposures in the \code{r_input} object. Plots are indexed by the exposure number serving as the outcome for the RMVMR analysis}
 #' \item{\code{qstat}}{A list containing global Q-statistics for RMVMR analyses regressing each exposure sequentially upon remaining exposures in the \code{r_input} object. Indexing follows that of \code{plots} and p-values for global heterogeneity are provided}
 #' \item{\code{qall}}{A list containing the individual Q-statistics and data for RMVMR analyses regressing each exposure sequentially upon remaining exposures in the \code{r_input} object. Indexing follows that of \code{plots}}
-#'}
-#'@author Wes Spiller; Eleanor Sanderson; Jack Bowden.
-#'@references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
-#' @importFrom utils capture.output
+#' }
+#' @author Wes Spiller; Eleanor Sanderson; Jack Bowden.
+#' @references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
 #' @export
 #' @examples
 #' f.data <- format_rmvmr(
@@ -34,9 +33,8 @@
 #'
 #' output$plot[[2]]
 #' output$qstat[[2]]
-#'
 
-strength_rmvmr <- function(r_input, gencov){
+strength_rmvmr <- function(r_input, gencov=0){
 
   # convert MRMVInput object to mvmr_format
   if ("MRMVInput" %in% class(r_input)) {
@@ -49,7 +47,11 @@ strength_rmvmr <- function(r_input, gencov){
     stop('The class of the data object must be "rmvmr_format", please resave the object with the output of format_rmvmr().')
   }
 
-  invisible(capture.output(MVMR_S <- MVMR::strength_mvmr(r_input,gencov)))
+  if(!is.list(gencov) && gencov == 0) {
+    warning("Covariance between effect of genetic variants on each exposure not specified. Fixing covariance at 0.")
+  }
+
+  invisible(utils::capture.output(MVMR_S <- MVMR::strength_mvmr(r_input,gencov)))
 
   exp.number<-length(names(r_input)[-c(1,2,3)])/2
 

@@ -29,6 +29,7 @@ ivw_rmvmr(f.data, TRUE)
 
 # Example using MRMVInput formatted data from the
 #  MendelianRandomization package
+if (require("MendelianRandomization", quietly = TRUE)) {
 bx <- as.matrix(rawdat_rmvmr[,c("ldl_beta", "hdl_beta", "tg_beta")])
 bxse <- as.matrix(rawdat_rmvmr[,c("ldl_se", "hdl_se", "tg_se")])
 dat <- MendelianRandomization::mr_mvinput(bx = bx,
@@ -37,6 +38,7 @@ dat <- MendelianRandomization::mr_mvinput(bx = bx,
                                           byse = rawdat_rmvmr$sbp_se,
                                           snps = rawdat_rmvmr$snp)
 ivw_rmvmr(r_input = dat, summary = TRUE)
+}
 }
 \references{
 Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.

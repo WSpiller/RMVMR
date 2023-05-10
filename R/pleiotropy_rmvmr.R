@@ -15,7 +15,6 @@
 #'
 #' @author Wes Spiller; Eleanor Sanderson; Jack Bowden.
 #' @references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
-#' @importFrom stats pchisq
 #' @export
 #' @examples
 #' f.data <- format_rmvmr(
@@ -150,7 +149,7 @@ pleiotropy_rmvmr <- function(r_input, rmvmr){
 
   for(i in 1:exp.number){
     Qj_out[i,1]<-sum(p.dat[p.dat$Group==levels(p.dat$Group)[i],]$Qjcor)
-    Qj_out[i,2]<-pchisq(Qj_out[i,1],nrow(p.dat[p.dat$Group==levels(p.dat$Group)[i],])-exp.number,lower.tail = FALSE)
+    Qj_out[i,2]<-stats::pchisq(Qj_out[i,1],nrow(p.dat[p.dat$Group==levels(p.dat$Group)[i],])-exp.number,lower.tail = FALSE)
   }
 
   TotalQs<-data.frame(Qj_out)
@@ -159,7 +158,7 @@ pleiotropy_rmvmr <- function(r_input, rmvmr){
 
 
   for(i in 1:length(p.dat[,1])){
-    indqj[i]<- pchisq(p.dat$Qjcor[i],1,lower.tail = FALSE)
+    indqj[i]<- stats::pchisq(p.dat$Qjcor[i],1,lower.tail = FALSE)
   }
 
   p.dat$corQjchi<-indqj
