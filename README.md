@@ -16,13 +16,15 @@ install.packages("remotes")
 ```
 
 Then the `RMVMR` package can be installed using:
+
 ```r
-remotes::install_github("WSpiller/RMVMR", build_opts = c("--no-resave-data", "--no-manual"), build_vignettes = TRUE)
+remotes::install_github("WSpiller/RMVMR")
 ```
 
 To update the package just run the following command again.
+
 ```r
-remotes::install_github("WSpiller/RMVMR", build_opts = c("--no-resave-data", "--no-manual"), build_vignettes = TRUE)
+remotes::install_github("WSpiller/RMVMR")
 ``` 
 
 ## Description
