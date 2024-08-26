@@ -1,7 +1,10 @@
 # RMVMR
 
-## Installation
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/WSpiller/RMVMR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/WSpiller/RMVMR/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
 
+## Installation
 
 RMVMR can be installed from the [MRCIEU R-Universe](https://mrcieu.r-universe.dev/) with
 

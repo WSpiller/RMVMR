@@ -10,3 +10,4 @@
 ^.github$
 .Rhistory
 ^_pkgdown\.yml$
+^\.github$
