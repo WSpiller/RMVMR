@@ -24,8 +24,8 @@ Imports:
 Suggests:
     MendelianRandomization
 Remotes:
-    wspiller/mvmr,
-    wspiller/radialmr
+    WSpiller/MVMR,
+    WSpiller/RadialMR
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
