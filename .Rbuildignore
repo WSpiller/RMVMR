@@ -11,3 +11,4 @@
 .Rhistory
 ^_pkgdown\.yml$
 ^\.github$
+^\.lintr$
