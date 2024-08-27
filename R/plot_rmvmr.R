@@ -52,7 +52,7 @@ plot_rmvmr <- function(r_input, rmvmr){
   for(i in 1:exp.number){
     f.vec[,i]<- r_input[,3+i]^2/r_input[,3 + exp.number + i]^2
 
-    for(j in 1:length(r_input[,1])){
+    for(j in seq_along(r_input[,1])){
       if(f.vec[j,i] < 10){
         f.vec[j,i]<-0
       }else{

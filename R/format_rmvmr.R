@@ -85,7 +85,7 @@ format_rmvmr<-function(BXGs,BYG,seBXGs,seBYG,RSID){
   exp.number<-length(names(dat)[-c(1,2,3)])/2
 
   for(i in 4:(4+exp.number-1)){
-    for(j in 1:length(dat[,1])){
+    for(j in seq_along(dat[,1])){
 
     if(dat[j,i] == 0){
       dat[j,i] <- 0.00001
