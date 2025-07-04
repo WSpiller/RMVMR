@@ -30,5 +30,4 @@
 #'
 #' @examples
 #' head(rawdat_rmvmr)
-
 "rawdat_rmvmr"

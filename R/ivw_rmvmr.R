@@ -31,11 +31,9 @@
 #'                                           snps = rawdat_rmvmr$snp)
 #' ivw_rmvmr(r_input = dat, summary = TRUE)
 #' }
-
 # Define IVW Radial Multivariable MR function: This takes the formatted dataframe from
 # the format_MVMR function as an input, and outputs a summary of effect estimates as well as formatted radial data frames
 # for downstream plotting
-
 ivw_rmvmr<-function(r_input,summary = TRUE){
 
   # convert MRMVInput object to mvmr_format

@@ -33,7 +33,6 @@
 #'
 #' output$plot[[2]]
 #' output$qstat[[2]]
-
 strength_rmvmr <- function(r_input, gencov=0){
 
   # convert MRMVInput object to mvmr_format

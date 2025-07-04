@@ -21,14 +21,11 @@
 #'  RSID = rawdat_rmvmr$snp)
 #' names(f.data)
 #' class(f.data)
-
 #Function for formatting RMVMR data frame
-
 #Define formatting function: RSID = rawdat_rmvmr$snp)This takes as inputs a matrix of instrument-exposure
 #associations, a vector of instrument-outcome associations, a matrix of
 #corresponding instrument-exposure standard errors, and a vector of identification
 #numbers for the instruments.
-
 format_rmvmr<-function(BXGs,BYG,seBXGs,seBYG,RSID){
 
   #If no instrument-identification vector is provided, a set of placeholder values

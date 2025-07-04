@@ -27,7 +27,6 @@
 #' q_object <- pleiotropy_rmvmr(f.data, rmvmr_output)
 #' q_object$gq
 #' head(q_object$qdat)
-
 pleiotropy_rmvmr <- function(r_input, rmvmr){
 
   # convert MRMVInput object to mvmr_format

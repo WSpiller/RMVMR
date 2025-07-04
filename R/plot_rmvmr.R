@@ -28,7 +28,6 @@
 #' plot_object <- plot_rmvmr(f.data, rmvmr_output)
 #' plot_object$p1
 #' plot_object$p2
-
 plot_rmvmr <- function(r_input, rmvmr){
 
   # convert MRMVInput object to mvmr_format
