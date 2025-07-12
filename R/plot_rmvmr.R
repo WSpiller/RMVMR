@@ -116,7 +116,7 @@ plot_rmvmr <- function(r_input, rmvmr){
                    axis.line = ggplot2::element_line(colour = "black")) +
     ggplot2::ylab(expression(hat(beta)[j]~sqrt(W[j]))) +
     ggplot2::xlab(expression(sqrt(W[j]))) +
-    ggplot2::scale_x_continuous(limits = c(0,max(p.dat$Wj + 5)), expand = c(0,0)) +
+    ggplot2::scale_x_continuous(limits = c(0,max(p.dat$Wj + 5))) +
     ggplot2::scale_y_continuous(limits = c(min(p.dat$BetaWj - 5), max(p.dat$BetaWj + 5)))
 
   for(i in 1:exp.number){
@@ -152,7 +152,7 @@ plot_rmvmr <- function(r_input, rmvmr){
                    axis.line = ggplot2::element_line(colour = "black")) +
     ggplot2::ylab(expression(hat(beta)[j]~sqrt(W[j]))) +
     ggplot2::xlab(expression(sqrt(W[j]))) +
-    ggplot2::scale_x_continuous(limits = c(0, max(p.dat$wj + 5)), expand = c(0,0)) +
+    ggplot2::scale_x_continuous(limits = c(0, max(p.dat$wj + 5))) +
     ggplot2::scale_y_continuous(limits = c(min((p.dat$wj*p.dat$corrected_beta) - 5),
                                            max((p.dat$wj*p.dat$corrected_beta) + 5)))
 
