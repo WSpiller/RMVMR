@@ -12,7 +12,8 @@ plot_rmvmr(r_input, rmvmr)
 \item{rmvmr}{An object containing the output from the \code{\link{ivw_rmvmr}} function of class \code{IVW_RMVMR}.}
 }
 \value{
-An object of class \code{"RMVMR_plot"} containing the following components:\describe{
+An object of class \code{"RMVMR_plot"} containing the following components:
+\describe{
 \item{\code{p1}}{A radial MVMR plot without correction}
 \item{\code{p2}}{A radial MVMR plot with correction}
 }

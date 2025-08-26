@@ -12,7 +12,8 @@ pleiotropy_rmvmr(r_input, rmvmr)
 \item{rmvmr}{An object containing the output from the \code{\link{ivw_rmvmr}} function of class \code{IVW_RMVMR}.}
 }
 \value{
-An object of class \code{"RMVMR_Q"} containing the following components:\describe{
+An object of class \code{"RMVMR_Q"} containing the following components:
+\describe{
 \item{\code{gq}}{A data frame containing the global Q-statistic and p-value after applying a correction for each exposure}
 \item{\code{qdat}}{A data frame containing the individual Q-statistic and p-value for each SNP after applying a correction for each exposure}
 }
