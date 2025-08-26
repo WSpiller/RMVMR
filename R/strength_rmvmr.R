@@ -10,7 +10,8 @@
 #'  effect of the genetic variants on each exposure to be known. This can either be estimated from individual level data,
 #'  be assumed to be zero, or fixed at zero using non-overlapping samples of each exposure GWAS. A value of 0 is used by default.
 #'
-#' @return An object of class \code{"S_RMVMR"} containing the following components:\describe{
+#' @return An object of class \code{"S_RMVMR"} containing the following components:
+#' \describe{
 #' \item{\code{plot}}{A list containing plots for RMVMR analyses regressing each exposure sequentially upon remaining exposures in the \code{r_input} object. Plots are indexed by the exposure number serving as the outcome for the RMVMR analysis}
 #' \item{\code{qstat}}{A list containing global Q-statistics for RMVMR analyses regressing each exposure sequentially upon remaining exposures in the \code{r_input} object. Indexing follows that of \code{plots} and p-values for global heterogeneity are provided}
 #' \item{\code{qall}}{A list containing the individual Q-statistics and data for RMVMR analyses regressing each exposure sequentially upon remaining exposures in the \code{r_input} object. Indexing follows that of \code{plots}}

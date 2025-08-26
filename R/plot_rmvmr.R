@@ -9,10 +9,11 @@
 #' @param r_input A formatted data frame using the [`format_rmvmr`] function or an object of class `MRMVInput` from [`MendelianRandomization::mr_mvinput`]
 #' @param rmvmr An object containing the output from the [`ivw_rmvmr`] function of class \code{IVW_RMVMR}.
 #'
-#' @return An object of class \code{"RMVMR_plot"} containing the following components:\describe{
+#' @return An object of class \code{"RMVMR_plot"} containing the following components:
+#' \describe{
 #' \item{\code{p1}}{A radial MVMR plot without correction}
 #' \item{\code{p2}}{A radial MVMR plot with correction}
-#'}
+#' }
 #'
 #' @author Wes Spiller; Eleanor Sanderson; Jack Bowden.
 #' @references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
