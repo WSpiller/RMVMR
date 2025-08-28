@@ -24,10 +24,12 @@ mrmvinput_to_rmvmr_format <- function(dat) {
     stop('The class of the input data object must be "MRMVInput"')
   }
 
-  out <- format_rmvmr(BXGs = dat@betaX,
-                      BYG = dat@betaY,
-                      seBXGs = dat@betaXse,
-                      seBYG = dat@betaYse,
-                      RSID = dat@snps)
+  out <- format_rmvmr(
+    BXGs = dat@betaX,
+    BYG = dat@betaY,
+    seBXGs = dat@betaXse,
+    seBYG = dat@betaYse,
+    RSID = dat@snps
+  )
   out
 }

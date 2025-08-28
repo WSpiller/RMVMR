@@ -29,154 +29,194 @@
 #' plot_object <- plot_rmvmr(f.data, rmvmr_output)
 #' plot_object$p1
 #' plot_object$p2
-plot_rmvmr <- function(r_input, rmvmr){
-
+plot_rmvmr <- function(r_input, rmvmr) {
   # convert MRMVInput object to mvmr_format
   if ("MRMVInput" %in% class(r_input)) {
     r_input <- mrmvinput_to_rmvmr_format(r_input)
   }
 
   # Perform check that r_input has been formatted using format_rmvmr function
-  if(!("rmvmr_format" %in%
-       class(r_input))) {
-    stop('The class of the data object must be "rmvmr_format", please resave the object with the output of format_rmvmr().')
+  if (
+    !("rmvmr_format" %in%
+      class(r_input))
+  ) {
+    stop(
+      'The class of the data object must be "rmvmr_format", please resave the object with the output of format_rmvmr().'
+    )
   }
 
   # to suppress the R CMD check note about: no visible binding for global variable
   BetaWj <- Group <- Wj <- wj <- ref_exposure <- corrected_beta <- NULL
 
-  exp.number<-length(names(r_input)[-c(1,2,3)])/2
+  exp.number <- length(names(r_input)[-c(1, 2, 3)]) / 2
 
-  f.vec<-matrix(0L, nrow = length(r_input[,1]), ncol = exp.number)
+  f.vec <- matrix(0L, nrow = length(r_input[, 1]), ncol = exp.number)
 
-  for(i in 1:exp.number){
-    f.vec[,i]<- r_input[,3+i]^2/r_input[,3 + exp.number + i]^2
+  for (i in 1:exp.number) {
+    f.vec[, i] <- r_input[, 3 + i]^2 / r_input[, 3 + exp.number + i]^2
 
-    for(j in seq_along(r_input[,1])){
-      if(f.vec[j,i] < 10){
-        f.vec[j,i]<-0
-      }else{
-        f.vec[j,i]<-1
+    for (j in seq_along(r_input[, 1])) {
+      if (f.vec[j, i] < 10) {
+        f.vec[j, i] <- 0
+      } else {
+        f.vec[j, i] <- 1
       }
-
     }
-
   }
 
-  Xlist<-NULL
+  Xlist <- NULL
 
-  for(i in 1:exp.number){
-
+  for (i in 1:exp.number) {
     #Format data for univariate MR using significant SNPs for each exposure
-    Xsub<-r_input[f.vec[,i] == 1,]
-    Xrad.dat <- RadialMR::format_radial(Xsub[,3+i],Xsub[,2],Xsub[,3 + exp.number + i],Xsub[,3],Xsub[,1])
+    Xsub <- r_input[f.vec[, i] == 1, ]
+    Xrad.dat <- RadialMR::format_radial(
+      Xsub[, 3 + i],
+      Xsub[, 2],
+      Xsub[, 3 + exp.number + i],
+      Xsub[, 3],
+      Xsub[, 1]
+    )
 
-    X.res <- RadialMR::ivw_radial(Xrad.dat,0.05/nrow(Xrad.dat),1,0.0001,FALSE)
+    X.res <- RadialMR::ivw_radial(
+      Xrad.dat,
+      0.05 / nrow(Xrad.dat),
+      1,
+      0.0001,
+      FALSE
+    )
 
-
-    if(is.null(Xlist)){
-      Xlist<-X.res
-    }else{
-      Xlist<-append(Xlist,X.res)
+    if (is.null(Xlist)) {
+      Xlist <- X.res
+    } else {
+      Xlist <- append(Xlist, X.res)
     }
-
   }
 
-  p.dat<-NULL
+  p.dat <- NULL
 
-  for(i in 1:exp.number){
+  for (i in 1:exp.number) {
+    Xdat <- data.frame(Xlist[5 + ((i - 1) * 13)])
+    Xdat$Group <- rep(i, nrow(Xdat))
+    names(Xdat) <- c("SNP", "Wj", "BetaWj", "Qj", "Qj_Chi", "Outliers", "Group")
 
-    Xdat<-data.frame(Xlist[5 + ((i-1)* 13)])
-    Xdat$Group<-rep(i,nrow(Xdat))
-    names(Xdat)<-c("SNP","Wj","BetaWj","Qj","Qj_Chi","Outliers","Group")
-
-
-    if(is.null(p.dat)){
-      p.dat<-Xdat
-    }else{
-      p.dat<-rbind(p.dat,Xdat)
+    if (is.null(p.dat)) {
+      p.dat <- Xdat
+    } else {
+      p.dat <- rbind(p.dat, Xdat)
     }
-
   }
 
-  p.dat[,7]<-as.factor(p.dat[,7])
+  p.dat[, 7] <- as.factor(p.dat[, 7])
 
-  for(i in 1:exp.number){
-    levels(p.dat[,7])[i] <- paste0("Exposure_", i, collapse = "")
+  for (i in 1:exp.number) {
+    levels(p.dat[, 7])[i] <- paste0("Exposure_", i, collapse = "")
   }
 
-  cpalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442","#D55E00", "#0072B2", "#CC79A7")
+  cpalette <- c(
+    "#E69F00",
+    "#56B4E9",
+    "#009E73",
+    "#F0E442",
+    "#D55E00",
+    "#0072B2",
+    "#CC79A7"
+  )
 
   B <- ggplot2::ggplot(p.dat, ggplot2::aes(x = Wj, y = BetaWj)) +
-    ggplot2::labs(title="Radial MVMR without correction") +
+    ggplot2::labs(title = "Radial MVMR without correction") +
     ggplot2::geom_point(ggplot2::aes(colour = Group)) +
     ggplot2::theme_bw() +
-    ggplot2::theme(panel.border = ggplot2::element_blank(),
-                   panel.grid.major = ggplot2::element_blank(),
-                   panel.grid.minor = ggplot2::element_blank(),
-                   axis.line = ggplot2::element_line(colour = "black")) +
-    ggplot2::ylab(expression(hat(beta)[j]~sqrt(W[j]))) +
+    ggplot2::theme(
+      panel.border = ggplot2::element_blank(),
+      panel.grid.major = ggplot2::element_blank(),
+      panel.grid.minor = ggplot2::element_blank(),
+      axis.line = ggplot2::element_line(colour = "black")
+    ) +
+    ggplot2::ylab(expression(hat(beta)[j] ~ sqrt(W[j]))) +
     ggplot2::xlab(expression(sqrt(W[j]))) +
-    ggplot2::scale_x_continuous(limits = c(0,max(p.dat$Wj + 5))) +
-    ggplot2::scale_y_continuous(limits = c(min(p.dat$BetaWj - 5), max(p.dat$BetaWj + 5)))
+    ggplot2::scale_x_continuous(limits = c(0, max(p.dat$Wj + 5))) +
+    ggplot2::scale_y_continuous(
+      limits = c(min(p.dat$BetaWj - 5), max(p.dat$BetaWj + 5))
+    )
 
-  for(i in 1:exp.number){
-
-    B <- B + ggplot2::geom_segment(x = 0,
-                                   xend = max(p.dat$Wj + 5),
-                                   y = 0,
-                                   yend = rmvmr$coef[i,1]*max(p.dat$Wj + 5),
-                                   color = cpalette[i])
-
+  for (i in 1:exp.number) {
+    B <- B +
+      ggplot2::geom_segment(
+        x = 0,
+        xend = max(p.dat$Wj + 5),
+        y = 0,
+        yend = rmvmr$coef[i, 1] * max(p.dat$Wj + 5),
+        color = cpalette[i]
+      )
   }
 
   B <- B +
-    ggplot2::scale_color_manual(name = "Estimates",
-                                breaks = levels(p.dat[,7]),
-                                values = cpalette[1:(exp.number)])
+    ggplot2::scale_color_manual(
+      name = "Estimates",
+      breaks = levels(p.dat[, 7]),
+      values = cpalette[1:(exp.number)]
+    )
 
   #### Correction Plot
 
   cordat <- pleiotropy_rmvmr(r_input, rmvmr)
 
-  cpalette <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442","#D55E00", "#0072B2", "#CC79A7")
+  cpalette <- c(
+    "#E69F00",
+    "#56B4E9",
+    "#009E73",
+    "#F0E442",
+    "#D55E00",
+    "#0072B2",
+    "#CC79A7"
+  )
 
   p.dat <- cordat$qdat
 
-  C <- ggplot2::ggplot(p.dat, ggplot2::aes(x = wj, y = wj*corrected_beta)) +
+  C <- ggplot2::ggplot(p.dat, ggplot2::aes(x = wj, y = wj * corrected_beta)) +
     ggplot2::labs(title = "Radial MVMR with correction") +
     ggplot2::geom_point(ggplot2::aes(colour = ref_exposure)) +
     ggplot2::theme_bw() +
-    ggplot2::theme(panel.border = ggplot2::element_blank(),
-                   panel.grid.major = ggplot2::element_blank(),
-                   panel.grid.minor = ggplot2::element_blank(),
-                   axis.line = ggplot2::element_line(colour = "black")) +
-    ggplot2::ylab(expression(hat(beta)[j]~sqrt(W[j]))) +
+    ggplot2::theme(
+      panel.border = ggplot2::element_blank(),
+      panel.grid.major = ggplot2::element_blank(),
+      panel.grid.minor = ggplot2::element_blank(),
+      axis.line = ggplot2::element_line(colour = "black")
+    ) +
+    ggplot2::ylab(expression(hat(beta)[j] ~ sqrt(W[j]))) +
     ggplot2::xlab(expression(sqrt(W[j]))) +
     ggplot2::scale_x_continuous(limits = c(0, max(p.dat$wj + 5))) +
-    ggplot2::scale_y_continuous(limits = c(min((p.dat$wj*p.dat$corrected_beta) - 5),
-                                           max((p.dat$wj*p.dat$corrected_beta) + 5)))
+    ggplot2::scale_y_continuous(
+      limits = c(
+        min((p.dat$wj * p.dat$corrected_beta) - 5),
+        max((p.dat$wj * p.dat$corrected_beta) + 5)
+      )
+    )
 
-  for(i in 1:exp.number){
-    C <- C + ggplot2::geom_segment(x = 0,
-                                   xend = max(p.dat$wj + 5),
-                                   y = 0,
-                                   yend = rmvmr$coef[i,1]*max(p.dat$wj + 5),
-                                   color = cpalette[i])
+  for (i in 1:exp.number) {
+    C <- C +
+      ggplot2::geom_segment(
+        x = 0,
+        xend = max(p.dat$wj + 5),
+        y = 0,
+        yend = rmvmr$coef[i, 1] * max(p.dat$wj + 5),
+        color = cpalette[i]
+      )
   }
 
   C <- C +
-    ggplot2::scale_color_manual(name = "Estimates",
-                                breaks = levels(p.dat[,6]),
-                                values = cpalette[1:(exp.number)])
+    ggplot2::scale_color_manual(
+      name = "Estimates",
+      breaks = levels(p.dat[, 6]),
+      values = cpalette[1:(exp.number)]
+    )
 
   multi_return <- function() {
-    Out_list <- list("p1" = B,"p2"= C)
-    class(Out_list)<-"RMVMR_plot"
+    Out_list <- list("p1" = B, "p2" = C)
+    class(Out_list) <- "RMVMR_plot"
 
     return(Out_list)
   }
 
-  OUT<-multi_return()
-
+  OUT <- multi_return()
 }

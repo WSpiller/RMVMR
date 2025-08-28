@@ -34,48 +34,50 @@
 # Define IVW Radial Multivariable MR function: This takes the formatted dataframe from
 # the format_MVMR function as an input, and outputs a summary of effect estimates as well as formatted radial data frames
 # for downstream plotting
-ivw_rmvmr<-function(r_input,summary = TRUE){
-
+ivw_rmvmr <- function(r_input, summary = TRUE) {
   # convert MRMVInput object to mvmr_format
   if ("MRMVInput" %in% class(r_input)) {
     r_input <- mrmvinput_to_rmvmr_format(r_input)
   }
 
   # Perform check that r_input has been formatted using format_rmvmr function
-  if(!("rmvmr_format" %in%
-       class(r_input))) {
-    stop('The class of the data object must be "rmvmr_format", please resave the object with the output of format_rmvmr().')
+  if (
+    !("rmvmr_format" %in%
+      class(r_input))
+  ) {
+    stop(
+      'The class of the data object must be "rmvmr_format", please resave the object with the output of format_rmvmr().'
+    )
   }
 
   #Determine the number of exposures included in the model
-  exp.number<-length(names(r_input)[-c(1,2,3)])/2
+  exp.number <- length(names(r_input)[-c(1, 2, 3)]) / 2
 
   #Create zero matrix for weight calculations
-  tm.weights<-matrix(0L, nrow = length(r_input[,1]), ncol = exp.number)
+  tm.weights <- matrix(0L, nrow = length(r_input[, 1]), ncol = exp.number)
 
   #Create subset of exposure summary data
-  exp.dat<-r_input[,4:(3+exp.number)]
-
+  exp.dat <- r_input[, 4:(3 + exp.number)]
 
   #Calculate square root weights wj
-  for(i in 1:exp.number){
-    tm.weights[,i] = sqrt((exp.dat[,i]^2)/r_input[,3]^2)
+  for (i in 1:exp.number) {
+    tm.weights[, i] = sqrt((exp.dat[, i]^2) / r_input[, 3]^2)
   }
 
   #Create zero matrix for ratio calculations
-  tm.ratios<-matrix(0L, nrow = length(r_input[,1]), ncol = exp.number)
+  tm.ratios <- matrix(0L, nrow = length(r_input[, 1]), ncol = exp.number)
 
   #Calculate ratio estimates
-  for(i in 1:exp.number){
-    tm.ratios[,i] = r_input[,2]/exp.dat[,i]
+  for (i in 1:exp.number) {
+    tm.ratios[, i] = r_input[, 2] / exp.dat[, i]
   }
 
   #Create zero matrix for weight times ratio calculations
-  tm.wr<-matrix(0L, nrow = length(r_input[,1]), ncol = exp.number)
+  tm.wr <- matrix(0L, nrow = length(r_input[, 1]), ncol = exp.number)
 
   #Multiply weighting by ratio estimates
-  for(i in 1:exp.number){
-    tm.wr[,i]<-tm.weights[,i]*tm.ratios[,i]
+  for (i in 1:exp.number) {
+    tm.wr[, i] <- tm.weights[, i] * tm.ratios[, i]
   }
 
   #Create empty list for plotting data frames
@@ -84,69 +86,65 @@ ivw_rmvmr<-function(r_input,summary = TRUE){
 
   # orientate data for X1
 
-  for(j in 1:exp.number){
+  for (j in 1:exp.number) {
+    expvec <- 1:exp.number
 
-  expvec<- 1:exp.number
+    tm.oriented <- matrix(0L, nrow = length(r_input[, 1]), ncol = exp.number)
 
-
-  tm.oriented<-matrix(0L, nrow = length(r_input[,1]), ncol = exp.number)
-
-
-  for(i in 1:(exp.number)){
-
-    if(j == i){
-      tm.oriented[,i]<-tm.weights[,i]
-    }else{
-      tm.oriented[,i]<-exp.dat[,expvec[(i)]]*sign(exp.dat[,j])
-      tm.oriented[,i]<-tm.oriented[,i] / r_input[,3]
-
+    for (i in 1:(exp.number)) {
+      if (j == i) {
+        tm.oriented[, i] <- tm.weights[, i]
+      } else {
+        tm.oriented[, i] <- exp.dat[, expvec[(i)]] * sign(exp.dat[, j])
+        tm.oriented[, i] <- tm.oriented[, i] / r_input[, 3]
+      }
     }
 
-  }
+    tempdat <- data.frame(tm.oriented)
 
-  tempdat<-data.frame(tm.oriented)
+    t.list[[j]] <- cbind(tm.wr[, j], tempdat)
 
-  t.list[[j]] <- cbind(tm.wr[,j],tempdat)
+    names(t.list[[j]])[1] <- paste0("Bwj_", j, collapse = "")
 
-  names(t.list[[j]])[1]<-paste0("Bwj_",j,collapse="")
-
-  #Rename columns for ease of interpretation
-  for(i in 1:exp.number){
-    names(t.list[[j]])[i+1]<- paste0("wj_",i,collapse="")
+    #Rename columns for ease of interpretation
+    for (i in 1:exp.number) {
+      names(t.list[[j]])[i + 1] <- paste0("wj_", i, collapse = "")
     }
-
   }
 
-  A_sum<-summary(stats::lm(tm.wr[,j]~ -1 + ., tempdat))
+  A_sum <- summary(stats::lm(tm.wr[, j] ~ -1 + ., tempdat))
 
-  A<-summary(stats::lm(tm.wr[,j]~ -1 + ., tempdat))$coef
+  A <- summary(stats::lm(tm.wr[, j] ~ -1 + ., tempdat))$coef
 
   #Rename the regressors for ease of interpretation
-  for(i in 1:exp.number){
-    dimnames(A)[[1]][i]<- paste0("exposure",i,collapse="")
+  for (i in 1:exp.number) {
+    dimnames(A)[[1]][i] <- paste0("exposure", i, collapse = "")
   }
 
-  if(summary == TRUE){
-
+  if (summary == TRUE) {
     # Print a few summary elements that are common to both lm and plm model summary objects
     cat("\n")
     cat("Radial Multivariable MR\n")
     cat("\n")
     print(A)
-    cat("\nResidual standard error:", round(A_sum$sigma,3), "on", A_sum$df[2], "degrees of freedom")
+    cat(
+      "\nResidual standard error:",
+      round(A_sum$sigma, 3),
+      "on",
+      A_sum$df[2],
+      "degrees of freedom"
+    )
     cat("\n")
     cat("\n")
     cat("\n")
   }
 
   multi_return <- function() {
-    Out_list <- list("coef" = A,"data"= t.list)
-    class(Out_list)<-"IVW_RMVMR"
+    Out_list <- list("coef" = A, "data" = t.list)
+    class(Out_list) <- "IVW_RMVMR"
 
     return(Out_list)
-}
+  }
 
-OUT<-multi_return()
-
-
+  OUT <- multi_return()
 }

@@ -34,39 +34,49 @@
 #'
 #' output$plot[[2]]
 #' output$qstat[[2]]
-strength_rmvmr <- function(r_input, gencov=0){
-
+strength_rmvmr <- function(r_input, gencov = 0) {
   # convert MRMVInput object to mvmr_format
   if ("MRMVInput" %in% class(r_input)) {
     r_input <- mrmvinput_to_rmvmr_format(r_input)
   }
 
   # Perform check that r_input has been formatted using format_rmvmr function
-  if(!("rmvmr_format" %in%
-       class(r_input))) {
-    stop('The class of the data object must be "rmvmr_format", please resave the object with the output of format_rmvmr().')
+  if (
+    !("rmvmr_format" %in%
+      class(r_input))
+  ) {
+    stop(
+      'The class of the data object must be "rmvmr_format", please resave the object with the output of format_rmvmr().'
+    )
   }
 
-  if(!is.list(gencov) && gencov == 0) {
-    warning("Covariance between effect of genetic variants on each exposure not specified. Fixing covariance at 0.")
+  if (!is.list(gencov) && gencov == 0) {
+    warning(
+      "Covariance between effect of genetic variants on each exposure not specified. Fixing covariance at 0."
+    )
   }
 
-  invisible(utils::capture.output(MVMR_S <- MVMR::strength_mvmr(r_input,gencov)))
+  invisible(utils::capture.output(
+    MVMR_S <- MVMR::strength_mvmr(r_input, gencov)
+  ))
 
-  exp.number<-length(names(r_input)[-c(1,2,3)])/2
+  exp.number <- length(names(r_input)[-c(1, 2, 3)]) / 2
 
   plots <- vector('list', exp.number)
   Qs <- vector('list', exp.number)
   Qall <- vector('list', exp.number)
 
-  for(i in 1:exp.number){
+  for (i in 1:exp.number) {
+    if (exp.number == 2) {
+      tdat <- RadialMR::format_radial(
+        r_input[, (4):(3 + exp.number)][-i],
+        r_input[, (3 + i)],
+        r_input[, (4 + exp.number):(3 + exp.number + exp.number)][-i],
+        r_input[, (3 + exp.number + i)],
+        r_input[, 1]
+      )
 
-    if(exp.number == 2){
-
-      tdat<-RadialMR::format_radial(r_input[,(4):(3+exp.number)][-i],r_input[,(3+i)],r_input[,(4+exp.number):(3+exp.number+exp.number)][-i],
-                         r_input[,(3+exp.number+i)],r_input[,1])
-
-      A <- RadialMR::ivw_radial(tdat,0.05/nrow(tdat),1,0.0001,FALSE)
+      A <- RadialMR::ivw_radial(tdat, 0.05 / nrow(tdat), 1, 0.0001, FALSE)
 
       plots[[i]] <- local({
         i <- i
@@ -82,19 +92,22 @@ strength_rmvmr <- function(r_input, gencov=0){
         i <- i
         qll <- A$data
       })
+    } else {
+      tdat <- format_rmvmr(
+        r_input[, (4):(3 + exp.number)][-i],
+        r_input[, (3 + i)],
+        r_input[, (4 + exp.number):(3 + exp.number + exp.number)][-i],
+        r_input[, (3 + exp.number + i)],
+        r_input[, 1]
+      )
 
-    }else{
+      A <- ivw_rmvmr(tdat, FALSE)
 
-      tdat<-format_rmvmr(r_input[,(4):(3+exp.number)][-i],r_input[,(3+i)],r_input[,(4+exp.number):(3+exp.number+exp.number)][-i],
-                         r_input[,(3+exp.number+i)],r_input[,1])
-
-      A<-ivw_rmvmr(tdat, FALSE)
-
-      G<-pleiotropy_rmvmr(tdat,A)
+      G <- pleiotropy_rmvmr(tdat, A)
 
       plots[[i]] <- local({
         i <- i
-        p1 <- plot_rmvmr(tdat,A)$p2
+        p1 <- plot_rmvmr(tdat, A)$p2
       })
 
       Qs[[i]] <- local({
@@ -106,18 +119,15 @@ strength_rmvmr <- function(r_input, gencov=0){
         i <- i
         qll <- G$qdat
       })
-
     }
-
-    }
+  }
 
   multi_return <- function() {
-    Out_list <- list("plot" = plots,"qstat"= Qs,"qall"= Qall, "f"=MVMR_S)
-    class(Out_list)<-"S_RMVMR"
+    Out_list <- list("plot" = plots, "qstat" = Qs, "qall" = Qall, "f" = MVMR_S)
+    class(Out_list) <- "S_RMVMR"
 
     return(Out_list)
   }
 
-  OUT<-multi_return()
-
+  OUT <- multi_return()
 }
