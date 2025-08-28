@@ -39,7 +39,7 @@ and is currently includes a range of functions for estimating causal effects, as
 
 ## Citation
 
-Spiller, W. Bowden, J and Sanderson E. "Estimating and visualising multivariable Mendelian randomization analyses within a radial framework" MedRxiv, 2023, doi: https://doi.org/10.1101/2023.04.04.23288134
+Spiller, W. Bowden, J and Sanderson E. Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. medRxiv, 2023.04.04.23288134, doi: https://doi.org/10.1101/2023.04.04.23288134
 
 ## License
 
