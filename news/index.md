@@ -1,5 +1,9 @@
 # Changelog
 
+## RMVMR 0.4.2
+
+- RMVMR now requires MVMR version 0.4.3 or later.
+
 ## RMVMR 0.4.1
 
 - Fixed a bug in
