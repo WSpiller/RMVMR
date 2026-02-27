@@ -1,3 +1,7 @@
+# RMVMR 0.4.2
+
+* RMVMR now requires MVMR version 0.4.3 or later.
+
 # RMVMR 0.4.1
 
 * Fixed a bug in `plot_rmvmr()` in the `ggplot2::scale_x_continuous()` calls. RMVMR should now run under version 4 of ggplot2, which is due to be released soon.

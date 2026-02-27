@@ -1,6 +1,6 @@
 Package: RMVMR
 Title: RMVMR
-Version: 0.4.1
+Version: 0.4.2
 Authors@R: c(
     person("Wes", "Spiller", , "wes.spiller@bristol.ac.uk", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-8169-5531")),
@@ -21,7 +21,7 @@ Depends:
     R (>= 4.1)
 Imports:
     ggplot2,
-    MVMR,
+    MVMR (>= 0.4.3),
     RadialMR
 Suggests:
     MendelianRandomization
