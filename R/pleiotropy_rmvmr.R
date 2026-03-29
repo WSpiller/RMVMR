@@ -54,20 +54,12 @@ pleiotropy_rmvmr <- function(r_input, rmvmr) {
   f.vec <- matrix(0L, nrow = length(r_input[, 1]), ncol = exp.number)
 
   for (i in 1:exp.number) {
-    f.vec[, i] <- r_input[, 3 + i]^2 / r_input[, 3 + exp.number + i]^2
-    for (j in seq_along(r_input[, 1])) {
-      if (f.vec[j, i] < 10) {
-        f.vec[j, i] <- 0
-      } else {
-        f.vec[j, i] <- 1
-      }
-    }
+    f.vec[, i] <- as.integer(r_input[, 3 + i]^2 / r_input[, 3 + exp.number + i]^2 >= 10)
   }
 
-  #Define null variable for univariate MR data
-  Xlist <- NULL
-
   #Obtain univariate MR data for each exposure
+  Xlist <- vector("list", exp.number)
+
   for (i in 1:exp.number) {
     Xsub <- r_input[f.vec[, i] == 1, ]
     Xrad.dat <- RadialMR::format_radial(
@@ -77,34 +69,24 @@ pleiotropy_rmvmr <- function(r_input, rmvmr) {
       Xsub[, 3],
       Xsub[, 1]
     )
-    X.res <- RadialMR::ivw_radial(
+    Xlist[[i]] <- RadialMR::ivw_radial(
       Xrad.dat,
       0.05 / nrow(Xrad.dat),
       1,
       0.0001,
       FALSE
     )
-    if (is.null(Xlist)) {
-      Xlist <- X.res
-    } else {
-      Xlist <- append(Xlist, X.res)
-    }
   }
 
   #Create combined data frame of univariate values
-
-  p.dat <- NULL
+  p.list <- vector("list", exp.number)
   for (i in 1:exp.number) {
-    Xdat <- data.frame(Xlist[5 + ((i - 1) * 13)])
-    Xdat$Group <- rep(i, nrow(Xdat))
+    Xdat <- data.frame(Xlist[[i]][5])
+    Xdat$Group <- i
     names(Xdat) <- c("SNP", "Wj", "BetaWj", "Qj", "Qj_Chi", "Outliers", "Group")
-
-    if (is.null(p.dat)) {
-      p.dat <- Xdat
-    } else {
-      p.dat <- rbind(p.dat, Xdat)
-    }
+    p.list[[i]] <- Xdat
   }
+  p.dat <- do.call(rbind, p.list)
 
   p.dat[, 7] <- as.factor(p.dat[, 7])
   for (i in 1:exp.number) {
@@ -113,7 +95,7 @@ pleiotropy_rmvmr <- function(r_input, rmvmr) {
 
   ##AL
 
-  Ratios <- NULL
+  Ratio_list <- vector("list", exp.number)
 
   for (i in 1:exp.number) {
     tdat <- r_input[
@@ -122,43 +104,31 @@ pleiotropy_rmvmr <- function(r_input, rmvmr) {
     Ratio_temp <- tdat[, 2] / tdat[, (3 + i)]
 
     for (j in 1:exp.number) {
-      if (i == j) {
-        Ratio_temp <- Ratio_temp
-      } else {
+      if (i != j) {
         Ratio_temp <- Ratio_temp -
           ((tdat[, (3 + j)] * rmvmr[j, 1]) / tdat[, (3 + i)])
       }
     }
-    if (is.null(Ratios)) {
-      Ratios <- Ratio_temp
-    } else {
-      Ratios <- c(Ratios, Ratio_temp)
-    }
+    Ratio_list[[i]] <- Ratio_temp
   }
+  Ratios <- unlist(Ratio_list)
 
   #QJ calculations
 
   p.dat$coratios <- Ratios
 
-  Qjvec <- NULL
+  Qj_list <- vector("list", exp.number)
 
   for (i in 1:exp.number) {
     tdat <- p.dat[p.dat$Group == levels(p.dat$Group)[i], ]
-
-    Qj <- tdat$Wj * (tdat$coratios - rmvmr[i, 1])^2
-
-    if (is.null(Qjvec)) {
-      Qjvec <- Qj
-    } else {
-      Qjvec <- c(Qjvec, Qj)
-    }
+    Qj_list[[i]] <- tdat$Wj * (tdat$coratios - rmvmr[i, 1])^2
   }
+  Qjvec <- unlist(Qj_list)
 
   p.dat$Qjcor <- Qjvec
 
   #Define matrix for recording total Q statistics.
   Qj_out <- matrix(0L, nrow = exp.number, ncol = 2)
-  indqj <- rep(0, length(p.dat[, 1]))
 
   for (i in 1:exp.number) {
     Qj_out[i, 1] <- sum(p.dat[p.dat$Group == levels(p.dat$Group)[i], ]$Qjcor)
@@ -173,9 +143,7 @@ pleiotropy_rmvmr <- function(r_input, rmvmr) {
   names(TotalQs) <- c("q_statistic", "p_value")
   row.names(TotalQs) <- levels(p.dat$Group)
 
-  for (i in seq_along(p.dat[, 1])) {
-    indqj[i] <- stats::pchisq(p.dat$Qjcor[i], 1, lower.tail = FALSE)
-  }
+  indqj <- stats::pchisq(p.dat$Qjcor, 1, lower.tail = FALSE)
 
   p.dat$corQjchi <- indqj
 
