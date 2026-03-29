@@ -8,6 +8,7 @@
 #'
 #' @param r_input A formatted data frame using the [`format_rmvmr`] function or an object of class `MRMVInput` from [`MendelianRandomization::mr_mvinput`]
 #' @param rmvmr An object containing the output from the [`ivw_rmvmr`] function of class \code{IVW_RMVMR}.
+#' @param cordat Optional. A pre-computed object from [`pleiotropy_rmvmr`]. If \code{NULL} (default), [`pleiotropy_rmvmr`] is called internally.
 #'
 #' @return An object of class \code{"RMVMR_plot"} containing the following components:
 #' \describe{
@@ -19,6 +20,7 @@
 #' @references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
 #' @export
 #' @examples
+#' \donttest{
 #' f.data <- format_rmvmr(
 #'     BXGs = rawdat_rmvmr[,c("ldl_beta","hdl_beta","tg_beta")],
 #'     BYG = rawdat_rmvmr$sbp_beta,
@@ -29,7 +31,8 @@
 #' plot_object <- plot_rmvmr(f.data, rmvmr_output)
 #' plot_object$p1
 #' plot_object$p2
-plot_rmvmr <- function(r_input, rmvmr) {
+#' }
+plot_rmvmr <- function(r_input, rmvmr, cordat = NULL) {
   # convert MRMVInput object to mvmr_format
   if ("MRMVInput" %in% class(r_input)) {
     r_input <- mrmvinput_to_rmvmr_format(r_input)
@@ -140,7 +143,9 @@ plot_rmvmr <- function(r_input, rmvmr) {
 
   #### Correction Plot
 
-  cordat <- pleiotropy_rmvmr(r_input, rmvmr)
+  if (is.null(cordat)) {
+    cordat <- pleiotropy_rmvmr(r_input, rmvmr)
+  }
 
   p.dat <- cordat$qdat
 
