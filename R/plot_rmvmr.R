@@ -53,18 +53,10 @@ plot_rmvmr <- function(r_input, rmvmr) {
   f.vec <- matrix(0L, nrow = length(r_input[, 1]), ncol = exp.number)
 
   for (i in 1:exp.number) {
-    f.vec[, i] <- r_input[, 3 + i]^2 / r_input[, 3 + exp.number + i]^2
-
-    for (j in seq_along(r_input[, 1])) {
-      if (f.vec[j, i] < 10) {
-        f.vec[j, i] <- 0
-      } else {
-        f.vec[j, i] <- 1
-      }
-    }
+    f.vec[, i] <- as.integer(r_input[, 3 + i]^2 / r_input[, 3 + exp.number + i]^2 >= 10)
   }
 
-  Xlist <- NULL
+  Xlist <- vector("list", exp.number)
 
   for (i in 1:exp.number) {
     #Format data for univariate MR using significant SNPs for each exposure
@@ -76,35 +68,24 @@ plot_rmvmr <- function(r_input, rmvmr) {
       Xsub[, 3],
       Xsub[, 1]
     )
-
-    X.res <- RadialMR::ivw_radial(
+    Xlist[[i]] <- RadialMR::ivw_radial(
       Xrad.dat,
       0.05 / nrow(Xrad.dat),
       1,
       0.0001,
       FALSE
     )
-
-    if (is.null(Xlist)) {
-      Xlist <- X.res
-    } else {
-      Xlist <- append(Xlist, X.res)
-    }
   }
 
-  p.dat <- NULL
+  p.list <- vector("list", exp.number)
 
   for (i in 1:exp.number) {
-    Xdat <- data.frame(Xlist[5 + ((i - 1) * 13)])
-    Xdat$Group <- rep(i, nrow(Xdat))
+    Xdat <- data.frame(Xlist[[i]][5])
+    Xdat$Group <- i
     names(Xdat) <- c("SNP", "Wj", "BetaWj", "Qj", "Qj_Chi", "Outliers", "Group")
-
-    if (is.null(p.dat)) {
-      p.dat <- Xdat
-    } else {
-      p.dat <- rbind(p.dat, Xdat)
-    }
+    p.list[[i]] <- Xdat
   }
+  p.dat <- do.call(rbind, p.list)
 
   p.dat[, 7] <- as.factor(p.dat[, 7])
 
@@ -160,16 +141,6 @@ plot_rmvmr <- function(r_input, rmvmr) {
   #### Correction Plot
 
   cordat <- pleiotropy_rmvmr(r_input, rmvmr)
-
-  cpalette <- c(
-    "#E69F00",
-    "#56B4E9",
-    "#009E73",
-    "#F0E442",
-    "#D55E00",
-    "#0072B2",
-    "#CC79A7"
-  )
 
   p.dat <- cordat$qdat
 
