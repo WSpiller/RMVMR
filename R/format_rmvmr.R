@@ -78,11 +78,7 @@ format_rmvmr <- function(BXGs, BYG, seBXGs, seBYG, RSID) {
   exp.number <- length(names(dat)[-c(1, 2, 3)]) / 2
 
   for (i in 4:(4 + exp.number - 1)) {
-    for (j in seq_along(dat[, 1])) {
-      if (dat[j, i] == 0) {
-        dat[j, i] <- 0.00001
-      }
-    }
+    dat[dat[, i] == 0, i] <- 0.00001
   }
 
   #Append rmvmr_format class to output data frame
