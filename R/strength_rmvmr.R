@@ -20,6 +20,7 @@
 #' @references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
 #' @export
 #' @examples
+#' \donttest{
 #' f.data <- format_rmvmr(
 #'     BXGs = rawdat_rmvmr[,c("ldl_beta","hdl_beta","tg_beta")],
 #'     BYG = rawdat_rmvmr$sbp_beta,
@@ -34,6 +35,7 @@
 #'
 #' output$plot[[2]]
 #' output$qstat[[2]]
+#' }
 strength_rmvmr <- function(r_input, gencov = 0) {
   # convert MRMVInput object to mvmr_format
   if ("MRMVInput" %in% class(r_input)) {
@@ -94,7 +96,7 @@ strength_rmvmr <- function(r_input, gencov = 0) {
 
       G <- pleiotropy_rmvmr(tdat, A)
 
-      plots[[i]] <- plot_rmvmr(tdat, A)$p2
+      plots[[i]] <- plot_rmvmr(tdat, A, cordat = G)$p2
       Qs[[i]]    <- G$gq
       Qall[[i]]  <- G$qdat
     }
