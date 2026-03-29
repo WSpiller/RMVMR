@@ -4,12 +4,14 @@
 \alias{plot_rmvmr}
 \title{plot_rmvmr}
 \usage{
-plot_rmvmr(r_input, rmvmr)
+plot_rmvmr(r_input, rmvmr, cordat = NULL)
 }
 \arguments{
 \item{r_input}{A formatted data frame using the \code{\link{format_rmvmr}} function or an object of class \code{MRMVInput} from \code{\link[MendelianRandomization:mr_mvinput]{MendelianRandomization::mr_mvinput}}}
 
 \item{rmvmr}{An object containing the output from the \code{\link{ivw_rmvmr}} function of class \code{IVW_RMVMR}.}
+
+\item{cordat}{Optional. A pre-computed object from \code{\link{pleiotropy_rmvmr}}. If \code{NULL} (default), \code{\link{pleiotropy_rmvmr}} is called internally.}
 }
 \value{
 An object of class \code{"RMVMR_plot"} containing the following components:
@@ -26,6 +28,7 @@ exposure are used, such that their first stage F-statistic is greater than 10. T
 corresponding regression line is proportional to the contribution of that SNP towards global heterogeneity.
 }
 \examples{
+\donttest{
 f.data <- format_rmvmr(
     BXGs = rawdat_rmvmr[,c("ldl_beta","hdl_beta","tg_beta")],
     BYG = rawdat_rmvmr$sbp_beta,
@@ -36,6 +39,7 @@ rmvmr_output <- ivw_rmvmr(f.data, FALSE)
 plot_object <- plot_rmvmr(f.data, rmvmr_output)
 plot_object$p1
 plot_object$p2
+}
 }
 \references{
 Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.

@@ -28,6 +28,7 @@ MVMR analyses. The function outputs a list of plots, global Q-statistics, and in
 using the \code{\link{format_rmvmr}} function. Named exposures in each list refer to the remaining exposures in the strength RMVMR model.
 }
 \examples{
+\donttest{
 f.data <- format_rmvmr(
     BXGs = rawdat_rmvmr[,c("ldl_beta","hdl_beta","tg_beta")],
     BYG = rawdat_rmvmr$sbp_beta,
@@ -42,6 +43,7 @@ output <- strength_rmvmr(f.data)
 
 output$plot[[2]]
 output$qstat[[2]]
+}
 }
 \references{
 Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
