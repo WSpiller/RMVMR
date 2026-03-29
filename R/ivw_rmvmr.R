@@ -53,32 +53,14 @@ ivw_rmvmr <- function(r_input, summary = TRUE) {
   #Determine the number of exposures included in the model
   exp.number <- length(names(r_input)[-c(1, 2, 3)]) / 2
 
-  #Create zero matrix for weight calculations
-  tm.weights <- matrix(0L, nrow = length(r_input[, 1]), ncol = exp.number)
-
-  #Create subset of exposure summary data
+  #Create subset of exposure summary data as a matrix for vectorised operations
   exp.dat <- r_input[, 4:(3 + exp.number)]
+  exp.mat <- as.matrix(exp.dat)
 
-  #Calculate square root weights wj
-  for (i in 1:exp.number) {
-    tm.weights[, i] = sqrt((exp.dat[, i]^2) / r_input[, 3]^2)
-  }
-
-  #Create zero matrix for ratio calculations
-  tm.ratios <- matrix(0L, nrow = length(r_input[, 1]), ncol = exp.number)
-
-  #Calculate ratio estimates
-  for (i in 1:exp.number) {
-    tm.ratios[, i] = r_input[, 2] / exp.dat[, i]
-  }
-
-  #Create zero matrix for weight times ratio calculations
-  tm.wr <- matrix(0L, nrow = length(r_input[, 1]), ncol = exp.number)
-
-  #Multiply weighting by ratio estimates
-  for (i in 1:exp.number) {
-    tm.wr[, i] <- tm.weights[, i] * tm.ratios[, i]
-  }
+  #Calculate square root weights wj, ratio estimates, and weighted ratios
+  tm.weights <- abs(exp.mat) / r_input[, 3]
+  tm.ratios  <- r_input[, 2] / exp.mat
+  tm.wr      <- tm.weights * tm.ratios
 
   #Create empty list for plotting data frames
 
@@ -114,7 +96,7 @@ ivw_rmvmr <- function(r_input, summary = TRUE) {
 
   A_sum <- summary(stats::lm(tm.wr[, j] ~ -1 + ., tempdat))
 
-  A <- summary(stats::lm(tm.wr[, j] ~ -1 + ., tempdat))$coef
+  A <- A_sum$coef
 
   #Rename the regressors for ease of interpretation
   for (i in 1:exp.number) {
