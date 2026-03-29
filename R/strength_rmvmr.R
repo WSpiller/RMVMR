@@ -78,20 +78,9 @@ strength_rmvmr <- function(r_input, gencov = 0) {
 
       A <- RadialMR::ivw_radial(tdat, 0.05 / nrow(tdat), 1, 0.0001, FALSE)
 
-      plots[[i]] <- local({
-        i <- i
-        p1 <- RadialMR::plot_radial(A)
-      })
-
-      Qs[[i]] <- local({
-        i <- i
-        qst <- A$qstatistic
-      })
-
-      Qall[[i]] <- local({
-        i <- i
-        qll <- A$data
-      })
+      plots[[i]] <- RadialMR::plot_radial(A)
+      Qs[[i]]    <- A$qstatistic
+      Qall[[i]]  <- A$data
     } else {
       tdat <- format_rmvmr(
         r_input[, (4):(3 + exp.number)][-i],
@@ -105,20 +94,9 @@ strength_rmvmr <- function(r_input, gencov = 0) {
 
       G <- pleiotropy_rmvmr(tdat, A)
 
-      plots[[i]] <- local({
-        i <- i
-        p1 <- plot_rmvmr(tdat, A)$p2
-      })
-
-      Qs[[i]] <- local({
-        i <- i
-        qst <- G$gq
-      })
-
-      Qall[[i]] <- local({
-        i <- i
-        qll <- G$qdat
-      })
+      plots[[i]] <- plot_rmvmr(tdat, A)$p2
+      Qs[[i]]    <- G$gq
+      Qall[[i]]  <- G$qdat
     }
   }
 
