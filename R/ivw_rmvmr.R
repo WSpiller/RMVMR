@@ -69,15 +69,13 @@ ivw_rmvmr <- function(r_input, summary = TRUE) {
   # orientate data for X1
 
   for (j in 1:exp.number) {
-    expvec <- 1:exp.number
-
     tm.oriented <- matrix(0L, nrow = length(r_input[, 1]), ncol = exp.number)
 
     for (i in 1:(exp.number)) {
       if (j == i) {
         tm.oriented[, i] <- tm.weights[, i]
       } else {
-        tm.oriented[, i] <- exp.dat[, expvec[(i)]] * sign(exp.dat[, j])
+        tm.oriented[, i] <- exp.dat[, i] * sign(exp.dat[, j])
         tm.oriented[, i] <- tm.oriented[, i] / r_input[, 3]
       }
     }
