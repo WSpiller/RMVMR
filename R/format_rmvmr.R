@@ -31,7 +31,7 @@ format_rmvmr <- function(BXGs, BYG, seBXGs, seBYG, RSID) {
   #is produced. A warning is also given to indicate no values were provided
 
   if (missing(RSID)) {
-    RSID <- seq(from = 1, to = length(BYG), by = 1)
+    RSID <- seq_along(BYG)
     warning("Missing SNP IDs; Generating placeholders")
   }
 
