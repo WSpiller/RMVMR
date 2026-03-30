@@ -64,7 +64,7 @@ ivw_rmvmr <- function(r_input, summary = TRUE) {
 
   #Create empty list for plotting data frames
 
-  t.list <- vector(mode = "list", length = 3)
+  t.list <- vector(mode = "list", length = exp.number)
 
   # orientate data for X1
 
