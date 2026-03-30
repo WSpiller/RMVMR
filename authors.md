@@ -15,7 +15,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/WSpiller/RMVMR/blob/v0.4.2/inst/CITATION)
+[`inst/CITATION`](https://github.com/WSpiller/RMVMR/blob/main/inst/CITATION)
 
 Spiller W, Bowden J, Sanderson E (2023). “Estimating and visualising
 multivariable Mendelian randomization analyses within a radial

@@ -71,6 +71,7 @@ Wes Spiller; Eleanor Sanderson; Jack Bowden.
 ## Examples
 
 ``` r
+# \donttest{
 f.data <- format_rmvmr(
     BXGs = rawdat_rmvmr[,c("ldl_beta","hdl_beta","tg_beta")],
     BYG = rawdat_rmvmr$sbp_beta,
@@ -91,4 +92,5 @@ output$qstat[[2]]
 #>            q_statistic       p_value
 #> Exposure_1    1377.211 6.618994e-230
 #> Exposure_2    1057.544 8.171778e-177
+# }
 ```

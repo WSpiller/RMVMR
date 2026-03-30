@@ -19,7 +19,7 @@ global heterogeneity.
 ## Usage
 
 ``` r
-plot_rmvmr(r_input, rmvmr)
+plot_rmvmr(r_input, rmvmr, cordat = NULL)
 ```
 
 ## Arguments
@@ -36,6 +36,14 @@ plot_rmvmr(r_input, rmvmr)
   An object containing the output from the
   [`ivw_rmvmr`](https://wspiller.github.io/RMVMR/reference/ivw_rmvmr.md)
   function of class `IVW_RMVMR`.
+
+- cordat:
+
+  Optional. A pre-computed object from
+  [`pleiotropy_rmvmr`](https://wspiller.github.io/RMVMR/reference/pleiotropy_rmvmr.md).
+  If `NULL` (default),
+  [`pleiotropy_rmvmr`](https://wspiller.github.io/RMVMR/reference/pleiotropy_rmvmr.md)
+  is called internally.
 
 ## Value
 
@@ -61,6 +69,7 @@ Wes Spiller; Eleanor Sanderson; Jack Bowden.
 ## Examples
 
 ``` r
+# \donttest{
 f.data <- format_rmvmr(
     BXGs = rawdat_rmvmr[,c("ldl_beta","hdl_beta","tg_beta")],
     BYG = rawdat_rmvmr$sbp_beta,
@@ -72,4 +81,6 @@ plot_object <- plot_rmvmr(f.data, rmvmr_output)
 plot_object$p1
 
 plot_object$p2
+
+# }
 ```

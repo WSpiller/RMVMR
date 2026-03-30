@@ -15,7 +15,7 @@ corresponding regression line is proportional to the contribution of that SNP to
 
     <a class="navbar-brand me-2" href="../index.html">RMVMR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +43,7 @@ corresponding regression line is proportional to the contribution of that SNP to
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>plot_rmvmr</h1>
-      <small class="dont-index">Source: <a href="https://github.com/WSpiller/RMVMR/blob/v0.4.2/R/plot_rmvmr.R" class="external-link"><code>R/plot_rmvmr.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/WSpiller/RMVMR/blob/main/R/plot_rmvmr.R" class="external-link"><code>R/plot_rmvmr.R</code></a></small>
       <div class="d-none name"><code>plot_rmvmr.Rd</code></div>
     </div>
 
@@ -57,7 +57,7 @@ corresponding regression line is proportional to the contribution of that SNP to
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_rmvmr</span><span class="op">(</span><span class="va">r_input</span>, <span class="va">rmvmr</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plot_rmvmr</span><span class="op">(</span><span class="va">r_input</span>, <span class="va">rmvmr</span>, cordat <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -70,6 +70,10 @@ corresponding regression line is proportional to the contribution of that SNP to
 
 <dt id="arg-rmvmr">rmvmr<a class="anchor" aria-label="anchor" href="#arg-rmvmr"></a></dt>
 <dd><p>An object containing the output from the <code><a href="ivw_rmvmr.html">ivw_rmvmr</a></code> function of class <code>IVW_RMVMR</code>.</p></dd>
+
+
+<dt id="arg-cordat">cordat<a class="anchor" aria-label="anchor" href="#arg-cordat"></a></dt>
+<dd><p>Optional. A pre-computed object from <code><a href="pleiotropy_rmvmr.html">pleiotropy_rmvmr</a></code>. If <code>NULL</code> (default), <code><a href="pleiotropy_rmvmr.html">pleiotropy_rmvmr</a></code> is called internally.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -93,7 +97,8 @@ corresponding regression line is proportional to the contribution of that SNP to
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">f.data</span> <span class="op">&lt;-</span> <span class="fu"><a href="format_rmvmr.html">format_rmvmr</a></span><span class="op">(</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="va">f.data</span> <span class="op">&lt;-</span> <span class="fu"><a href="format_rmvmr.html">format_rmvmr</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    BXGs <span class="op">=</span> <span class="va">rawdat_rmvmr</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ldl_beta"</span>,<span class="st">"hdl_beta"</span>,<span class="st">"tg_beta"</span><span class="op">)</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>    BYG <span class="op">=</span> <span class="va">rawdat_rmvmr</span><span class="op">$</span><span class="va">sbp_beta</span>,</span></span>
 <span class="r-in"><span>    seBXGs <span class="op">=</span> <span class="va">rawdat_rmvmr</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ldl_se"</span>,<span class="st">"hdl_se"</span>,<span class="st">"tg_se"</span><span class="op">)</span><span class="op">]</span>,</span></span>
@@ -105,6 +110,7 @@ corresponding regression line is proportional to the contribution of that SNP to
 <span class="r-plt img"><img src="plot_rmvmr-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="va">plot_object</span><span class="op">$</span><span class="va">p2</span></span></span>
 <span class="r-plt img"><img src="plot_rmvmr-2.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
