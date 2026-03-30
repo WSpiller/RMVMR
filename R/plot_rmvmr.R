@@ -106,6 +106,8 @@ plot_rmvmr <- function(r_input, rmvmr, cordat = NULL) {
     "#CC79A7"
   )
 
+  Wj_max <- max(p.dat$Wj) + 5
+
   B <- ggplot2::ggplot(p.dat, ggplot2::aes(x = Wj, y = BetaWj)) +
     ggplot2::labs(title = "Radial MVMR without correction") +
     ggplot2::geom_point(ggplot2::aes(colour = Group)) +
@@ -118,18 +120,18 @@ plot_rmvmr <- function(r_input, rmvmr, cordat = NULL) {
     ) +
     ggplot2::ylab(expression(hat(beta)[j] ~ sqrt(W[j]))) +
     ggplot2::xlab(expression(sqrt(W[j]))) +
-    ggplot2::scale_x_continuous(limits = c(0, max(p.dat$Wj + 5))) +
+    ggplot2::scale_x_continuous(limits = c(0, Wj_max)) +
     ggplot2::scale_y_continuous(
-      limits = c(min(p.dat$BetaWj - 5), max(p.dat$BetaWj + 5))
+      limits = c(min(p.dat$BetaWj) - 5, max(p.dat$BetaWj) + 5)
     )
 
   for (i in 1:exp.number) {
     B <- B +
       ggplot2::geom_segment(
         x = 0,
-        xend = max(p.dat$Wj + 5),
+        xend = Wj_max,
         y = 0,
-        yend = rmvmr$coef[i, 1] * max(p.dat$Wj + 5),
+        yend = rmvmr$coef[i, 1] * Wj_max,
         color = cpalette[i]
       )
   }
@@ -149,6 +151,9 @@ plot_rmvmr <- function(r_input, rmvmr, cordat = NULL) {
 
   p.dat <- cordat$qdat
 
+  wj_max <- max(p.dat$wj) + 5
+  wj_beta <- p.dat$wj * p.dat$corrected_beta
+
   C <- ggplot2::ggplot(p.dat, ggplot2::aes(x = wj, y = wj * corrected_beta)) +
     ggplot2::labs(title = "Radial MVMR with correction") +
     ggplot2::geom_point(ggplot2::aes(colour = ref_exposure)) +
@@ -161,21 +166,18 @@ plot_rmvmr <- function(r_input, rmvmr, cordat = NULL) {
     ) +
     ggplot2::ylab(expression(hat(beta)[j] ~ sqrt(W[j]))) +
     ggplot2::xlab(expression(sqrt(W[j]))) +
-    ggplot2::scale_x_continuous(limits = c(0, max(p.dat$wj + 5))) +
+    ggplot2::scale_x_continuous(limits = c(0, wj_max)) +
     ggplot2::scale_y_continuous(
-      limits = c(
-        min((p.dat$wj * p.dat$corrected_beta) - 5),
-        max((p.dat$wj * p.dat$corrected_beta) + 5)
-      )
+      limits = c(min(wj_beta) - 5, max(wj_beta) + 5)
     )
 
   for (i in 1:exp.number) {
     C <- C +
       ggplot2::geom_segment(
         x = 0,
-        xend = max(p.dat$wj + 5),
+        xend = wj_max,
         y = 0,
-        yend = rmvmr$coef[i, 1] * max(p.dat$wj + 5),
+        yend = rmvmr$coef[i, 1] * wj_max,
         color = cpalette[i]
       )
   }
