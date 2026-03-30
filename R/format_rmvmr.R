@@ -31,7 +31,7 @@ format_rmvmr <- function(BXGs, BYG, seBXGs, seBYG, RSID) {
   #is produced. A warning is also given to indicate no values were provided
 
   if (missing(RSID)) {
-    RSID <- seq(from = 1, to = length(BYG), by = 1)
+    RSID <- seq_along(BYG)
     warning("Missing SNP IDs; Generating placeholders")
   }
 
@@ -45,18 +45,14 @@ format_rmvmr <- function(BXGs, BYG, seBXGs, seBYG, RSID) {
   seBYG <- data.frame(seBYG)
   RSID <- data.frame(RSID)
 
-  for (i in seq_len(ncol(BXGs))) {
-    names(BXGs)[i] <- paste0("betaX", i, collapse = ",")
-  }
+  names(BXGs) <- paste0("betaX", seq_len(ncol(BXGs)))
 
-  #This loop names each column of instrument-exposure standard errors in the order
+  #This names each column of instrument-exposure standard errors in the order
   #they appear in the provided matrix, labeling each exposure with an X and
   #subsequent index number. The standard error for the first exposure provided
   #is labelled sebetaX1.
 
-  for (i in seq_len(ncol(seBXGs))) {
-    names(seBXGs)[i] <- paste0("sebetaX", i, collapse = ",")
-  }
+  names(seBXGs) <- paste0("sebetaX", seq_len(ncol(seBXGs)))
 
   # A dataframe containing all the necessary information for performing
   #multivariable MR is created, placing the variables in a specific order.
@@ -66,11 +62,7 @@ format_rmvmr <- function(BXGs, BYG, seBXGs, seBYG, RSID) {
   # The columns of the dataframe are renamed so as to be interpretable in
   #subsequent functions.
 
-  for (i in seq_len(ncol(dat))) {
-    if (i > 1) {
-      dat[, i] <- as.numeric(dat[, i])
-    }
-  }
+  dat[, -1] <- lapply(dat[, -1], as.numeric)
 
   names(dat) <- c("SNP", "betaYG", "sebetaYG", names(BXGs), names(seBXGs))
 
@@ -78,11 +70,7 @@ format_rmvmr <- function(BXGs, BYG, seBXGs, seBYG, RSID) {
   exp.number <- length(names(dat)[-c(1, 2, 3)]) / 2
 
   for (i in 4:(4 + exp.number - 1)) {
-    for (j in seq_along(dat[, 1])) {
-      if (dat[j, i] == 0) {
-        dat[j, i] <- 0.00001
-      }
-    }
+    dat[dat[, i] == 0, i] <- 0.00001
   }
 
   #Append rmvmr_format class to output data frame

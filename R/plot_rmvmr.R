@@ -8,6 +8,7 @@
 #'
 #' @param r_input A formatted data frame using the [`format_rmvmr`] function or an object of class `MRMVInput` from [`MendelianRandomization::mr_mvinput`]
 #' @param rmvmr An object containing the output from the [`ivw_rmvmr`] function of class \code{IVW_RMVMR}.
+#' @param cordat Optional. A pre-computed object from [`pleiotropy_rmvmr`]. If \code{NULL} (default), [`pleiotropy_rmvmr`] is called internally.
 #'
 #' @return An object of class \code{"RMVMR_plot"} containing the following components:
 #' \describe{
@@ -19,6 +20,7 @@
 #' @references Spiller, W., et al., Estimating and visualising multivariable Mendelian randomization analyses within a radial framework. Forthcoming.
 #' @export
 #' @examples
+#' \donttest{
 #' f.data <- format_rmvmr(
 #'     BXGs = rawdat_rmvmr[,c("ldl_beta","hdl_beta","tg_beta")],
 #'     BYG = rawdat_rmvmr$sbp_beta,
@@ -29,7 +31,8 @@
 #' plot_object <- plot_rmvmr(f.data, rmvmr_output)
 #' plot_object$p1
 #' plot_object$p2
-plot_rmvmr <- function(r_input, rmvmr) {
+#' }
+plot_rmvmr <- function(r_input, rmvmr, cordat = NULL) {
   # convert MRMVInput object to mvmr_format
   if ("MRMVInput" %in% class(r_input)) {
     r_input <- mrmvinput_to_rmvmr_format(r_input)
@@ -53,18 +56,10 @@ plot_rmvmr <- function(r_input, rmvmr) {
   f.vec <- matrix(0L, nrow = length(r_input[, 1]), ncol = exp.number)
 
   for (i in 1:exp.number) {
-    f.vec[, i] <- r_input[, 3 + i]^2 / r_input[, 3 + exp.number + i]^2
-
-    for (j in seq_along(r_input[, 1])) {
-      if (f.vec[j, i] < 10) {
-        f.vec[j, i] <- 0
-      } else {
-        f.vec[j, i] <- 1
-      }
-    }
+    f.vec[, i] <- as.integer(r_input[, 3 + i]^2 / r_input[, 3 + exp.number + i]^2 >= 10)
   }
 
-  Xlist <- NULL
+  Xlist <- vector("list", exp.number)
 
   for (i in 1:exp.number) {
     #Format data for univariate MR using significant SNPs for each exposure
@@ -76,35 +71,24 @@ plot_rmvmr <- function(r_input, rmvmr) {
       Xsub[, 3],
       Xsub[, 1]
     )
-
-    X.res <- RadialMR::ivw_radial(
+    Xlist[[i]] <- RadialMR::ivw_radial(
       Xrad.dat,
       0.05 / nrow(Xrad.dat),
       1,
       0.0001,
       FALSE
     )
-
-    if (is.null(Xlist)) {
-      Xlist <- X.res
-    } else {
-      Xlist <- append(Xlist, X.res)
-    }
   }
 
-  p.dat <- NULL
+  p.list <- vector("list", exp.number)
 
   for (i in 1:exp.number) {
-    Xdat <- data.frame(Xlist[5 + ((i - 1) * 13)])
-    Xdat$Group <- rep(i, nrow(Xdat))
+    Xdat <- data.frame(Xlist[[i]][5])
+    Xdat$Group <- i
     names(Xdat) <- c("SNP", "Wj", "BetaWj", "Qj", "Qj_Chi", "Outliers", "Group")
-
-    if (is.null(p.dat)) {
-      p.dat <- Xdat
-    } else {
-      p.dat <- rbind(p.dat, Xdat)
-    }
+    p.list[[i]] <- Xdat
   }
+  p.dat <- do.call(rbind, p.list)
 
   p.dat[, 7] <- as.factor(p.dat[, 7])
 
@@ -122,6 +106,8 @@ plot_rmvmr <- function(r_input, rmvmr) {
     "#CC79A7"
   )
 
+  Wj_max <- max(p.dat$Wj) + 5
+
   B <- ggplot2::ggplot(p.dat, ggplot2::aes(x = Wj, y = BetaWj)) +
     ggplot2::labs(title = "Radial MVMR without correction") +
     ggplot2::geom_point(ggplot2::aes(colour = Group)) +
@@ -134,18 +120,18 @@ plot_rmvmr <- function(r_input, rmvmr) {
     ) +
     ggplot2::ylab(expression(hat(beta)[j] ~ sqrt(W[j]))) +
     ggplot2::xlab(expression(sqrt(W[j]))) +
-    ggplot2::scale_x_continuous(limits = c(0, max(p.dat$Wj + 5))) +
+    ggplot2::scale_x_continuous(limits = c(0, Wj_max)) +
     ggplot2::scale_y_continuous(
-      limits = c(min(p.dat$BetaWj - 5), max(p.dat$BetaWj + 5))
+      limits = c(min(p.dat$BetaWj) - 5, max(p.dat$BetaWj) + 5)
     )
 
   for (i in 1:exp.number) {
     B <- B +
       ggplot2::geom_segment(
         x = 0,
-        xend = max(p.dat$Wj + 5),
+        xend = Wj_max,
         y = 0,
-        yend = rmvmr$coef[i, 1] * max(p.dat$Wj + 5),
+        yend = rmvmr$coef[i, 1] * Wj_max,
         color = cpalette[i]
       )
   }
@@ -159,19 +145,14 @@ plot_rmvmr <- function(r_input, rmvmr) {
 
   #### Correction Plot
 
-  cordat <- pleiotropy_rmvmr(r_input, rmvmr)
-
-  cpalette <- c(
-    "#E69F00",
-    "#56B4E9",
-    "#009E73",
-    "#F0E442",
-    "#D55E00",
-    "#0072B2",
-    "#CC79A7"
-  )
+  if (is.null(cordat)) {
+    cordat <- pleiotropy_rmvmr(r_input, rmvmr)
+  }
 
   p.dat <- cordat$qdat
+
+  wj_max <- max(p.dat$wj) + 5
+  wj_beta <- p.dat$wj * p.dat$corrected_beta
 
   C <- ggplot2::ggplot(p.dat, ggplot2::aes(x = wj, y = wj * corrected_beta)) +
     ggplot2::labs(title = "Radial MVMR with correction") +
@@ -185,21 +166,18 @@ plot_rmvmr <- function(r_input, rmvmr) {
     ) +
     ggplot2::ylab(expression(hat(beta)[j] ~ sqrt(W[j]))) +
     ggplot2::xlab(expression(sqrt(W[j]))) +
-    ggplot2::scale_x_continuous(limits = c(0, max(p.dat$wj + 5))) +
+    ggplot2::scale_x_continuous(limits = c(0, wj_max)) +
     ggplot2::scale_y_continuous(
-      limits = c(
-        min((p.dat$wj * p.dat$corrected_beta) - 5),
-        max((p.dat$wj * p.dat$corrected_beta) + 5)
-      )
+      limits = c(min(wj_beta) - 5, max(wj_beta) + 5)
     )
 
   for (i in 1:exp.number) {
     C <- C +
       ggplot2::geom_segment(
         x = 0,
-        xend = max(p.dat$wj + 5),
+        xend = wj_max,
         y = 0,
-        yend = rmvmr$coef[i, 1] * max(p.dat$wj + 5),
+        yend = rmvmr$coef[i, 1] * wj_max,
         color = cpalette[i]
       )
   }
