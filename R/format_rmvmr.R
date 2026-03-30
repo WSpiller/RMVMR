@@ -45,18 +45,14 @@ format_rmvmr <- function(BXGs, BYG, seBXGs, seBYG, RSID) {
   seBYG <- data.frame(seBYG)
   RSID <- data.frame(RSID)
 
-  for (i in seq_len(ncol(BXGs))) {
-    names(BXGs)[i] <- paste0("betaX", i, collapse = ",")
-  }
+  names(BXGs) <- paste0("betaX", seq_len(ncol(BXGs)))
 
-  #This loop names each column of instrument-exposure standard errors in the order
+  #This names each column of instrument-exposure standard errors in the order
   #they appear in the provided matrix, labeling each exposure with an X and
   #subsequent index number. The standard error for the first exposure provided
   #is labelled sebetaX1.
 
-  for (i in seq_len(ncol(seBXGs))) {
-    names(seBXGs)[i] <- paste0("sebetaX", i, collapse = ",")
-  }
+  names(seBXGs) <- paste0("sebetaX", seq_len(ncol(seBXGs)))
 
   # A dataframe containing all the necessary information for performing
   #multivariable MR is created, placing the variables in a specific order.
