@@ -62,11 +62,7 @@ format_rmvmr <- function(BXGs, BYG, seBXGs, seBYG, RSID) {
   # The columns of the dataframe are renamed so as to be interpretable in
   #subsequent functions.
 
-  for (i in seq_len(ncol(dat))) {
-    if (i > 1) {
-      dat[, i] <- as.numeric(dat[, i])
-    }
-  }
+  dat[, -1] <- lapply(dat[, -1], as.numeric)
 
   names(dat) <- c("SNP", "betaYG", "sebetaYG", names(BXGs), names(seBXGs))
 
