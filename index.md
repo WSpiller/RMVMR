@@ -6,6 +6,7 @@ RMVMR can be installed from the [MRCIEU
 R-Universe](https://mrcieu.r-universe.dev/) with
 
 ``` r
+
 install.packages("RMVMR", repos = c("https://mrcieu.r-universe.dev", "https://cloud.r-project.org"))
 ```
 
@@ -13,18 +14,21 @@ To install `RMVMR` directly from the GitHub repository, first make sure
 you have the `remotes` package installed:
 
 ``` r
+
 install.packages("remotes")
 ```
 
 Then the `RMVMR` package can be installed using:
 
 ``` r
+
 remotes::install_github("WSpiller/RMVMR")
 ```
 
 To update the package just run the following command again.
 
 ``` r
+
 remotes::install_github("WSpiller/RMVMR")
 ```
 
