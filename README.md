@@ -35,7 +35,7 @@ remotes::install_github("WSpiller/RMVMR")
 
 We have written the `RMVMR` R package to perform radial multivariable Mendelian randomization analyses, including heterogeneity
 statistics for assessing instrument strength and validity. The package accommodates any number of exposures less than 6,
-and is currently includes a range of functions for estimating causal effects, as well as assessing conditional instrument strength and pleiotropic bias.
+and currently includes a range of functions for estimating causal effects, as well as assessing conditional instrument strength and pleiotropic bias.
 
 ## Citation
 
