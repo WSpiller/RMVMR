@@ -5,7 +5,7 @@
 #' @param dat Object from [`MendelianRandomization::mr_mvinput`].
 #'
 #' @export
-#' @return data.frame with additoinal classes `rmvmr_format`, the RMVMR format, and `mvmr_format`.
+#' @return data.frame with additional classes `rmvmr_format`, the RMVMR format, and `mvmr_format`.
 #' @examples
 #' if (require("MendelianRandomization", quietly = TRUE)) {
 #' bx <- as.matrix(rawdat_rmvmr[,c("ldl_beta", "hdl_beta")])
