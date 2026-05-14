@@ -19,7 +19,7 @@ mrmvinput_to_rmvmr_format(dat)
 
 ## Value
 
-data.frame with additoinal classes `rmvmr_format`, the RMVMR format, and
+data.frame with additional classes `rmvmr_format`, the RMVMR format, and
 `mvmr_format`.
 
 ## Examples

@@ -1,7 +1,7 @@
 # plot_rmvmr
 
 Generates two radial multivariable Mendelian randomization (MVMR) plots.
-The first plot shows shows the estimated direct effect for each exposure
+The first plot shows the estimated direct effect for each exposure
 obtained by fitting a radial MVMR model. Each data point shows the
 square root weighting for each SNP on the x-axis, and product of the
 ratio estimate and square root weighting for each SNP on the y-axis.
