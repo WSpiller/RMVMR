@@ -37,8 +37,8 @@ format_rmvmr(BXGs, BYG, seBXGs, seBYG, RSID)
 - RSID:
 
   A vector of names for genetic variants included in the analysis. If
-  variant IDs are not provided (`RSID="NULL"`), a vector of ID numbers
-  will be generated.
+  variant IDs are not provided (the argument is omitted or `RSID=NULL`),
+  a vector of ID numbers will be generated.
 
 ## Value
 

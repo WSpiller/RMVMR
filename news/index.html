@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">RMVMR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.5</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,6 +39,18 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.4.5" id="rmvmr-045">RMVMR 0.4.5<a class="anchor" aria-label="anchor" href="#rmvmr-045"></a></h2>
+<ul><li>Fixed a bug in <code><a href="../reference/strength_rmvmr.html">strength_rmvmr()</a></code> where supplying <code>gencov</code> as a matrix or vector (rather than the scalar default) errored before <code><a href="https://wspiller.github.io/MVMR/reference/strength_mvmr.html" class="external-link">MVMR::strength_mvmr()</a></code> was called.</li>
+<li>
+<code><a href="../reference/format_rmvmr.html">format_rmvmr()</a></code> now generates placeholder variant IDs when <code>RSID = NULL</code>, matching the documentation. The <code>RSID</code> argument description previously showed a typo (<code>RSID="NULL"</code>).</li>
+<li>
+<code><a href="../reference/plot_rmvmr.html">plot_rmvmr()</a></code> no longer recomputes the univariate radial analyses when called with the default <code>cordat = NULL</code>, roughly halving the number of <code><a href="https://wspiller.github.io/RadialMR/reference/ivw_radial.html" class="external-link">RadialMR::ivw_radial()</a></code> calls. Results are unchanged.</li>
+<li>
+<code><a href="../reference/ivw_rmvmr.html">ivw_rmvmr()</a></code> now fits the radial IVW model explicitly rather than via variables left over from the orientation loop. The estimate is invariant to the choice of orientation, so this is fitted directly as the canonical model; the returned coefficients (estimates, standard errors, t-values and p-values), residual standard error and degrees of freedom are unchanged.</li>
+<li>
+<code><a href="../reference/ivw_rmvmr.html">ivw_rmvmr()</a></code> no longer returns the undocumented <code>data</code> element. This element held intermediate orientation data frames that were not used elsewhere in the package. The estimated coefficients remain unchanged and are still available in the <code>coef</code> element.</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.4" id="rmvmr-044">RMVMR 0.4.4<a class="anchor" aria-label="anchor" href="#rmvmr-044"></a></h2>
 <ul><li>Bump roxygen2 to 8.0.0 and add a package level helpfile.</li>
 </ul></div>
@@ -67,7 +79,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>
