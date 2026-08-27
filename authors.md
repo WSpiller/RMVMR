@@ -12,6 +12,9 @@
 - **Tom Palmer**. Author, maintainer.
   [](https://orcid.org/0000-0003-4655-4511)
 
+- **Nicolai Vitt**. Contributor.
+  [](https://orcid.org/0000-0002-5988-9372)
+
 ## Citation
 
 Source:

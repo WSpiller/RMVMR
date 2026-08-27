@@ -1,5 +1,18 @@
 # Changelog
 
+## RMVMR 0.4.6
+
+- Fixed a bug in the corrected Q-statistic calculation used by
+  [`pleiotropy_rmvmr()`](https://wspiller.github.io/RMVMR/reference/pleiotropy_rmvmr.md)
+  and
+  [`plot_rmvmr()`](https://wspiller.github.io/RMVMR/reference/plot_rmvmr.md):
+  the square-root radial weight `Wj` was not squared, so SNP
+  contributions were weighted by the square-root weight rather than the
+  full inverse-variance weight. Q-statistics, their p-values and outlier
+  detection now differ from previous versions (thanks
+  [@nvitt](https://github.com/nvitt),
+  [\#8](https://github.com/WSpiller/RMVMR/issues/8)).
+
 ## RMVMR 0.4.5
 
 - Fixed a bug in

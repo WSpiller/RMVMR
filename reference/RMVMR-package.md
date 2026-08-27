@@ -33,3 +33,8 @@ Authors:
 
 - Eleanor Sanderson <eleanor.sanderson@bristol.ac.uk>
   ([ORCID](https://orcid.org/0000-0001-5188-5775))
+
+Other contributors:
+
+- Nicolai Vitt <nicolai.vitt@bristol.ac.uk>
+  ([ORCID](https://orcid.org/0000-0002-5988-9372)) \[contributor\]

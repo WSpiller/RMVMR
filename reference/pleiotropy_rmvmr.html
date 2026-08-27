@@ -13,7 +13,7 @@ analyses, relative to the exposure given in column exposure."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">RMVMR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,18 +99,18 @@ analyses, relative to the exposure given in column <code>exposure</code>.</p>
 <span class="r-in"><span><span class="va">rmvmr_output</span> <span class="op">&lt;-</span> <span class="fu"><a href="ivw_rmvmr.html">ivw_rmvmr</a></span><span class="op">(</span><span class="va">f.data</span>, <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">q_object</span> <span class="op">&lt;-</span> <span class="fu">pleiotropy_rmvmr</span><span class="op">(</span><span class="va">f.data</span>, <span class="va">rmvmr_output</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">q_object</span><span class="op">$</span><span class="va">gq</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            q_statistic   p_value</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Exposure_1    39.00391 0.9999987</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Exposure_2    32.72136 0.9999999</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Exposure_3    33.84794 0.9998315</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            q_statistic      p_value</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Exposure_1    462.7225 3.113248e-52</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Exposure_2    388.3605 2.500332e-40</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Exposure_3    341.6064 4.439083e-38</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">q_object</span><span class="op">$</span><span class="va">qdat</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>          snp        wj corrected_beta         qj       qj_p ref_exposure</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 rs10019888  9.638623    0.182234939 0.40143746 0.52634782   Exposure_1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 rs10468017 51.780930    0.001079676 0.02721426 0.86896961   Exposure_1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3  rs1047891 12.076698    0.490835137 3.17425712 0.07480722   Exposure_1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 rs10761762  9.195911   -0.413504104 1.41062004 0.23495349   Exposure_1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 rs11045163 10.340424   -0.176298188 0.24667725 0.61942451   Exposure_1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 rs11065987 10.561270   -0.802588890 6.43772951 0.01117214   Exposure_1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          snp        wj corrected_beta        qj         qj_p ref_exposure</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 rs10019888  9.638623    0.182234939  3.869304 4.917690e-02   Exposure_1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 rs10468017 51.780930    0.001079676  1.409180 2.351926e-01   Exposure_1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3  rs1047891 12.076698    0.490835137 38.334545 5.959821e-10   Exposure_1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 rs10761762  9.195911   -0.413504104 12.971937 3.161947e-04   Exposure_1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 rs11045163 10.340424   -0.176298188  2.550747 1.102421e-01   Exposure_1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 rs11065987 10.561270   -0.802588890 67.990597 1.642771e-16   Exposure_1</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -89,8 +89,8 @@ output <- strength_rmvmr(f.data)
 output$plot[[2]]
 
 output$qstat[[2]]
-#>            q_statistic       p_value
-#> Exposure_1    1377.211 6.618994e-230
-#> Exposure_2    1057.544 8.171778e-177
+#>            q_statistic p_value
+#> Exposure_1    6852.432       0
+#> Exposure_2    5884.426       0
 # }
 ```
