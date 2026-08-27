@@ -75,7 +75,7 @@ rmvmr_correction <- function(r_input, rmvmr, exp.number, p.dat) {
 
   for (i in 1:exp.number) {
     tdat <- p.dat[p.dat$Group == levels(p.dat$Group)[i], ]
-    Qj_list[[i]] <- tdat$Wj * (tdat$coratios - rmvmr[i, 1])^2
+    Qj_list[[i]] <- tdat$Wj^2 * (tdat$coratios - rmvmr[i, 1])^2
   }
   Qjvec <- unlist(Qj_list)
 
