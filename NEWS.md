@@ -1,3 +1,7 @@
+# RMVMR 0.4.6
+
+* Fixed a bug in the corrected Q-statistic calculation used by `pleiotropy_rmvmr()` and `plot_rmvmr()`: the square-root radial weight `Wj` was not squared, so SNP contributions were weighted by the square-root weight rather than the full inverse-variance weight. Q-statistics, their p-values and outlier detection now differ from previous versions (thanks @nvitt, #8).
+
 # RMVMR 0.4.5
 
 * Fixed a bug in `strength_rmvmr()` where supplying `gencov` as a matrix or vector (rather than the scalar default) errored before `MVMR::strength_mvmr()` was called.
