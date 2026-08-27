@@ -29,5 +29,10 @@ Authors:
   \item Eleanor Sanderson \email{eleanor.sanderson@bristol.ac.uk} (\href{https://orcid.org/0000-0001-5188-5775}{ORCID})
 }
 
+Other contributors:
+\itemize{
+  \item Nicolai Vitt \email{nicolai.vitt@bristol.ac.uk} (\href{https://orcid.org/0000-0002-5988-9372}{ORCID}) [contributor]
+}
+
 }
 \keyword{internal}
