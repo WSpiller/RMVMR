@@ -1,3 +1,8 @@
+# RMVMR 0.4.7
+
+* `pleiotropy_rmvmr()`, `plot_rmvmr()` and `strength_rmvmr()` no longer pass on the warning from RadialMR 1.2.5 and later that the fixed-effect exact confidence interval of `RadialMR::ivw_radial()` is empty. RMVMR does not use that interval, so the warning, which was repeated for each exposure, was not relevant. Results are unchanged.
+* Now requires RadialMR 1.2.5 or later.
+
 # RMVMR 0.4.6
 
 * Fixed a bug in the corrected Q-statistic calculation used by `pleiotropy_rmvmr()` and `plot_rmvmr()`: the square-root radial weight `Wj` was not squared, so SNP contributions were weighted by the square-root weight rather than the full inverse-variance weight. Q-statistics, their p-values and outlier detection now differ from previous versions (thanks @nvitt, #8).

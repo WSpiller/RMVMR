@@ -1,6 +1,21 @@
 # Internal helpers shared by pleiotropy_rmvmr() and plot_rmvmr(). These are not
 # exported and take an already validated rmvmr_format data frame.
 
+# Fit RadialMR::ivw_radial() with first order weights and no printed summary.
+# RMVMR uses only the IVW fit and per-SNP data, so the warning RadialMR gives
+# when the fixed effect exact confidence interval is empty is not relevant and
+# is muffled; any other warnings are passed on.
+rmvmr_ivw_radial <- function(rad.dat) {
+  withCallingHandlers(
+    RadialMR::ivw_radial(rad.dat, 0.05 / nrow(rad.dat), 1, 0.0001, FALSE),
+    warning = function(w) {
+      if (grepl("fixed effect exact confidence interval", conditionMessage(w))) {
+        invokeRestart("muffleWarning")
+      }
+    }
+  )
+}
+
 # Perform a univariate radial MR analysis for each exposure using only the SNPs
 # whose first-stage F-statistic exceeds 10, and assemble the per-SNP results
 # into a single data frame with a Group factor labelling the reference exposure.
@@ -23,13 +38,7 @@ rmvmr_univariate_radial <- function(r_input, exp.number) {
       Xsub[, 3],
       Xsub[, 1]
     )
-    Xfit <- RadialMR::ivw_radial(
-      Xrad.dat,
-      0.05 / nrow(Xrad.dat),
-      1,
-      0.0001,
-      FALSE
-    )
+    Xfit <- rmvmr_ivw_radial(Xrad.dat)
     Xdat <- data.frame(Xfit[5])
     Xdat$Group <- i
     names(Xdat) <- c("SNP", "Wj", "BetaWj", "Qj", "Qj_Chi", "Outliers", "Group")
