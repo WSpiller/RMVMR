@@ -1,4 +1,4 @@
-# RMVMR (development version)
+# RMVMR 0.4.7
 
 * `pleiotropy_rmvmr()`, `plot_rmvmr()` and `strength_rmvmr()` no longer pass on the warning from RadialMR 1.2.5 and later that the fixed-effect exact confidence interval of `RadialMR::ivw_radial()` is empty. RMVMR does not use that interval, so the warning, which was repeated for each exposure, was not relevant. Results are unchanged.
 * Now requires RadialMR 1.2.5 or later.
