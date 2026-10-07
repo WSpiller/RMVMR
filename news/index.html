@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">RMVMR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,9 +35,15 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/WSpiller/RMVMR/blob/v0.4.6/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/WSpiller/RMVMR/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.4.7" id="rmvmr-047">RMVMR 0.4.7<a class="anchor" aria-label="anchor" href="#rmvmr-047"></a></h2>
+<ul><li>
+<code><a href="../reference/pleiotropy_rmvmr.html">pleiotropy_rmvmr()</a></code>, <code><a href="../reference/plot_rmvmr.html">plot_rmvmr()</a></code> and <code><a href="../reference/strength_rmvmr.html">strength_rmvmr()</a></code> no longer pass on the warning from RadialMR 1.2.5 and later that the fixed-effect exact confidence interval of <code><a href="https://wspiller.github.io/RadialMR/reference/ivw_radial.html" class="external-link">RadialMR::ivw_radial()</a></code> is empty. RMVMR does not use that interval, so the warning, which was repeated for each exposure, was not relevant. Results are unchanged.</li>
+<li>Now requires RadialMR 1.2.5 or later.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.4.6" id="rmvmr-046">RMVMR 0.4.6<a class="anchor" aria-label="anchor" href="#rmvmr-046"></a></h2>
 <ul><li>Fixed a bug in the corrected Q-statistic calculation used by <code><a href="../reference/pleiotropy_rmvmr.html">pleiotropy_rmvmr()</a></code> and <code><a href="../reference/plot_rmvmr.html">plot_rmvmr()</a></code>: the square-root radial weight <code>Wj</code> was not squared, so SNP contributions were weighted by the square-root weight rather than the full inverse-variance weight. Q-statistics, their p-values and outlier detection now differ from previous versions (thanks <a href="https://github.com/nvitt" class="external-link">@nvitt</a>, <a href="https://github.com/WSpiller/RMVMR/issues/8" class="external-link">#8</a>).</li>

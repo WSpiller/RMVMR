@@ -1,5 +1,18 @@
 # Changelog
 
+## RMVMR 0.4.7
+
+- [`pleiotropy_rmvmr()`](https://wspiller.github.io/RMVMR/reference/pleiotropy_rmvmr.md),
+  [`plot_rmvmr()`](https://wspiller.github.io/RMVMR/reference/plot_rmvmr.md)
+  and
+  [`strength_rmvmr()`](https://wspiller.github.io/RMVMR/reference/strength_rmvmr.md)
+  no longer pass on the warning from RadialMR 1.2.5 and later that the
+  fixed-effect exact confidence interval of
+  [`RadialMR::ivw_radial()`](https://wspiller.github.io/RadialMR/reference/ivw_radial.html)
+  is empty. RMVMR does not use that interval, so the warning, which was
+  repeated for each exposure, was not relevant. Results are unchanged.
+- Now requires RadialMR 1.2.5 or later.
+
 ## RMVMR 0.4.6
 
 - Fixed a bug in the corrected Q-statistic calculation used by
