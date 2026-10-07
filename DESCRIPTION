@@ -24,7 +24,7 @@ Depends:
 Imports:
     ggplot2,
     MVMR (>= 0.4.3),
-    RadialMR
+    RadialMR (>= 1.2.5)
 Suggests:
     MendelianRandomization
 Remotes:

@@ -78,7 +78,7 @@ strength_rmvmr <- function(r_input, gencov = 0) {
         r_input[, 1]
       )
 
-      A <- RadialMR::ivw_radial(tdat, 0.05 / nrow(tdat), 1, 0.0001, FALSE)
+      A <- rmvmr_ivw_radial(tdat)
 
       plots[[i]] <- RadialMR::plot_radial(A)
       Qs[[i]]    <- A$qstatistic
